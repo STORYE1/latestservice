@@ -1,0 +1,124 @@
+2024-12-30T17:14:48.141Z error: Authentication token is missing
+2024-12-30T17:15:09.128Z error: Authentication token is missing
+2024-12-30T17:15:42.783Z error: Authentication token is missing
+2024-12-30T17:16:13.429Z error: Authentication token is missing
+2024-12-30T17:16:36.080Z error: Authentication token is missing
+2024-12-30T17:17:34.069Z error: Unhandled promise rejection: consoloe is not defined
+2024-12-30T17:17:57.845Z error: Unhandled promise rejection: consoloe is not defined
+2024-12-30T17:24:40.843Z error: Authentication token is missing
+2024-12-30T17:24:51.604Z error: Authentication token is missing
+2024-12-30T17:25:23.787Z error: Authentication token is missing
+2024-12-30T17:25:34.834Z error: Authentication token is missing
+2024-12-30T17:38:53.426Z error: Authentication token is missing
+2024-12-30T17:44:17.880Z error: Authentication token is missing
+2024-12-30T17:45:08.040Z error: Authentication token is missing
+2024-12-30T17:51:09.065Z error: An error occurred during authentication: jwt malformed
+2024-12-30T17:52:25.515Z error: An error occurred during authentication: jwt malformed
+2024-12-30T17:53:21.728Z error: Authentication token is missing
+2024-12-30T17:55:39.736Z error: An error occurred during authentication: jwt malformed
+2024-12-30T17:56:53.750Z error: Authentication error: jwt malformed
+2024-12-30T17:57:20.045Z error: Authentication error: jwt malformed
+2024-12-30T17:59:14.550Z error: Authentication error: jwt malformed
+2024-12-30T18:02:25.905Z error: Error verifying token: jwt malformed
+2024-12-30T18:02:31.321Z error: Error verifying token: jwt malformed
+2024-12-31T05:00:43.418Z error: Error verifying token: jwt expired
+2024-12-31T06:02:49.709Z error: Error verifying token: jwt expired
+2024-12-31T07:20:32.598Z error: Error verifying token: jwt expired
+2024-12-31T08:46:55.698Z error: Error verifying token: jwt expired
+2024-12-31T15:08:45.901Z error: Error verifying token: jwt expired
+2024-12-31T16:10:47.817Z error: Error verifying token: jwt expired
+2025-01-01T04:16:29.833Z error: Error verifying token: jwt expired
+2025-01-01T06:00:28.338Z error: Error verifying token: jwt expired
+2025-01-01T08:31:28.519Z error: Error verifying token: jwt expired
+2025-01-01T08:32:09.813Z error: Error verifying token: jwt expired
+2025-01-01T11:51:04.806Z error: Error verifying token: jwt expired
+2025-01-02T15:27:12.789Z error: Unhandled promise rejection: Invalid status code: (req.files || []).map is not a function
+2025-01-02T15:28:56.725Z error: Unhandled promise rejection: Invalid status code: (req.files || []).map is not a function
+2025-01-02T16:00:49.104Z error: Error verifying token: jwt expired
+2025-01-02T16:01:52.144Z error: Error verifying token: jwt expired
+2025-01-02T16:02:15.729Z error: Unhandled promise rejection: Invalid status code: Error uploading to S3: params.Body is required
+2025-01-02T16:27:38.247Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-02T16:35:17.058Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-02T17:19:46.180Z error: Error verifying token: jwt expired
+2025-01-02T17:21:19.625Z error: Error verifying token: jwt expired
+2025-01-02T17:21:56.273Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-02T17:41:00.535Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-02T17:56:14.087Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-02T17:57:39.633Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-03T03:48:34.324Z error: Error verifying token: jwt expired
+2025-01-03T03:48:52.647Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-03T04:00:39.893Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-03T04:03:33.058Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-03T04:07:07.899Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-03T04:18:39.101Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-03T06:29:46.617Z error: Error verifying token: jwt expired
+2025-01-03T06:30:29.310Z error: Error verifying token: jwt expired
+2025-01-03T06:32:55.777Z error: Unhandled promise rejection: Invalid status code: Failed to create tour with media
+2025-01-03T07:19:37.143Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T07:30:22.666Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T07:37:04.802Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T07:38:23.927Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T07:51:50.848Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T08:35:29.226Z error: Error verifying token: jwt expired
+2025-01-03T08:36:59.290Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T08:58:57.034Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T09:02:35.522Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T09:04:33.252Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T09:40:12.405Z error: Error verifying token: jwt expired
+2025-01-03T09:41:31.213Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T09:47:41.662Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T09:47:58.025Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T10:31:26.431Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T10:32:17.779Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T10:32:50.944Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T10:39:03.410Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T10:51:33.808Z error: Error verifying token: jwt expired
+2025-01-03T10:52:54.538Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T10:56:28.156Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T10:57:44.546Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T11:10:04.190Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T11:13:56.704Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T11:27:20.662Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T11:28:44.124Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T11:33:12.370Z error: Unhandled promise rejection: Invalid status code: Failed to create tour
+2025-01-03T12:16:29.362Z error: Error verifying token: jwt expired
+2025-01-04T05:22:51.121Z error: Error verifying token: jwt expired
+2025-01-04T06:30:43.297Z error: Error verifying token: jwt expired
+2025-01-04T12:22:34.159Z error: Error verifying token: jwt expired
+2025-01-06T19:01:52.632Z error: Error verifying token: jwt expired
+2025-01-07T10:08:03.676Z error: Unhandled promise rejection: Invalid status code: Failed to fetch tour
+2025-01-07T10:10:59.261Z error: Unhandled promise rejection: Invalid status code: Failed to fetch tour
+2025-01-07T10:12:17.909Z error: Unhandled promise rejection: Invalid status code: Failed to fetch tour
+2025-01-07T10:14:19.494Z error: Unhandled promise rejection: Invalid status code: Failed to fetch tour
+2025-01-07T10:16:20.106Z error: Unhandled promise rejection: Invalid status code: Failed to fetch tour
+2025-01-07T10:17:57.915Z error: Unhandled promise rejection: Invalid status code: Failed to fetch tour
+2025-01-07T10:24:27.298Z error: Error verifying token: jwt expired
+2025-01-07T11:04:01.925Z error: Authorization header is missing or invalid
+2025-01-07T11:04:48.177Z error: Authorization header is missing or invalid
+2025-01-07T11:06:25.180Z error: Authorization header is missing or invalid
+2025-01-07T11:09:29.531Z error: Error verifying token: jwt malformed
+2025-01-07T11:10:09.653Z error: Error verifying token: jwt malformed
+2025-01-07T11:10:12.894Z error: Error verifying token: jwt malformed
+2025-01-07T11:10:18.302Z error: Error verifying token: jwt malformed
+2025-01-07T11:10:21.392Z error: Error verifying token: jwt malformed
+2025-01-07T11:12:34.518Z error: Error verifying token: jwt malformed
+2025-01-07T11:12:39.843Z error: Error verifying token: jwt malformed
+2025-01-07T11:13:19.883Z error: Error verifying token: jwt malformed
+2025-01-07T11:13:41.393Z error: Error verifying token: jwt malformed
+2025-01-07T11:14:05.249Z error: Error verifying token: jwt malformed
+2025-01-07T11:14:07.390Z error: Error verifying token: jwt malformed
+2025-01-07T11:14:21.942Z error: Error verifying token: jwt malformed
+2025-01-07T16:36:24.113Z error: Error verifying token: jwt expired
+2025-01-08T03:07:30.252Z error: Error verifying token: jwt expired
+2025-01-08T04:49:25.840Z error: Error verifying token: jwt expired
+2025-01-08T15:29:17.971Z error: Error verifying token: jwt expired
+2025-01-08T17:26:54.381Z error: Unhandled promise rejection: Media is not defined
+2025-01-08T17:40:55.719Z error: Error verifying token: jwt expired
+2025-01-08T18:13:31.885Z error: Error verifying token: jwt expired
+2025-01-08T18:29:15.924Z error: Error verifying token: jwt expired
+2025-01-20T02:29:17.058Z error: Error verifying token: jwt expired
+2025-01-20T02:31:51.048Z error: Error verifying token: jwt expired
+2025-01-20T04:35:37.995Z error: Error verifying token: jwt expired
+2025-01-20T05:49:35.202Z error: Error verifying token: jwt expired
+2025-01-20T07:10:13.161Z error: Error verifying token: jwt expired
+2025-01-20T08:16:12.988Z error: Error verifying token: jwt expired
