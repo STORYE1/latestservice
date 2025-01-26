@@ -310,34 +310,35 @@ class TourController {
 
 
     async getUserTourTitles(req, res) {
-        try {
-            const userId = req.user.userId;
+    try {
+        const userId = req.user.userId;
 
+        const tours = await TourRepository.getUserTourTitles(userId);
 
-            const tours = await TourRepository.getUserTourTitles(userId);
+        return res.status(200).json({
+            success: true,
+            message: 'Tour titles fetched successfully',
+            tours: tours || [], // Ensure tours is always an array
+        });
+    } catch (error) {
+        console.error('Error fetching user tour titles:', error);
 
-            if (!tours || tours.length === 0) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'No tours found for this user',
-                });
-            }
-
-            return res.status(200).json({
-                success: true,
-                message: 'Tour titles fetched successfully',
-                tours,
-            });
-        } catch (error) {
-            console.error('Error fetching user tour titles:', error);
-
-            return res.status(500).json({
+        // Send a clear error code for invalid tokens
+        if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
+            return res.status(401).json({
                 success: false,
-                message: 'Failed to fetch user tour titles',
-                error: error.message,
+                message: 'Invalid or expired token',
             });
         }
+
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch user tour titles',
+            error: error.message,
+        });
     }
+}
+
 
 
     async getAllCities(req, res) {
