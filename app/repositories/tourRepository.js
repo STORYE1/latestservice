@@ -160,6 +160,7 @@ class TourRepository {
                     'leader_name',
                     'ticket_price',
                     'cover_photo',
+                    languages	
                 ],
                 where: {
                     category_id: categoryId,
