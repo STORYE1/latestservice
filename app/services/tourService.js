@@ -14,16 +14,16 @@ class TourService {
 
             const params = {
                 Bucket: process.env.AWS_S3_BUCKET_NAME,
-                Key: file.originalname, // You may want to change this based on your use case
-                Body: file.buffer, // The actual file content (buffer)
+                Key: file.originalname,
+                Body: file.buffer,
                 ContentType: file.mimetype,
-                ACL: 'public-read', // Assuming you want the file to be publicly accessible
+                ACL: 'public-read',
             };
 
-            // Upload the file to S3
+
             const data = await s3.upload(params).promise();
             console.log('File uploaded successfully:', data.Location);
-            return data.Location; // Return the file URL
+            return data.Location;
         } catch (error) {
             console.error('Error uploading to S3:', error);
             throw new Error('Error uploading to S3: ' + error.message);
@@ -39,11 +39,8 @@ class TourService {
 
             if (mediaFiles && mediaFiles.length > 0) {
                 const mediaPromises = mediaFiles.map(async (mediaUrl) => {
-                    const type = mediaUrl.endsWith(".mp4")
-                        ? "video"
-                        : mediaUrl.endsWith(".png") || mediaUrl.endsWith(".jpg") || mediaUrl.endsWith(".jpeg")
-                            ? "image"
-                            : "other";
+                    const type = mediaUrl.endsWith(".mp4") ? "video" :
+                        mediaUrl.endsWith(".png") || mediaUrl.endsWith(".jpg") || mediaUrl.endsWith(".jpeg") ? "image" : "other";
 
                     const mediaData = {
                         tour_id: tour.tour_id,
@@ -51,13 +48,12 @@ class TourService {
                         media_url: mediaUrl,
                     };
 
-
                     await MediaRepository.addMedia(mediaData);
                 });
 
-
                 await Promise.all(mediaPromises);
             }
+
 
 
             if (tourData.cover_photo) {
@@ -158,22 +154,22 @@ class TourService {
 
     async deleteTourById(tourId) {
         try {
-            // Include the correct alias 'media' for the association
+
             const tour = await TourRepository.getTourById(tourId, {
-                include: [{ model: Media, as: 'media' }] // Use alias here
+                include: [{ model: Media, as: 'media' }]
             });
 
             if (!tour) {
                 throw new Error('Tour not found');
             }
 
-            // Delete associated media
+
             await Media.destroy({ where: { tour_id: tourId } });
 
-            // Delete the tour
+
             await tour.destroy();
 
-            // Return success message
+
             return { message: 'Tour and associated media deleted successfully' };
         } catch (error) {
             console.error('Error deleting tour:', error);

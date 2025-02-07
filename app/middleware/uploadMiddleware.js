@@ -1,6 +1,7 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
 
 require('dotenv').config();
 
@@ -30,7 +31,8 @@ const upload = multer({
         bucket: process.env.AWS_BUCKET_NAME,
         acl: 'public-read',
         key: (req, file, cb) => {
-            cb(null, `media/${Date.now()}-${file.originalname}`);
+            const uniqueName = `media/${uuidv4()}-${file.originalname}`;
+            cb(null, uniqueName);
         },
     }),
     limits: { fileSize: 50 * 1024 * 1024 },
