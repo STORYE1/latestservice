@@ -17,21 +17,18 @@ class AuthService {
 
   async sendOtpEmail(email, otp) {
     const subject = "OTP Code";
+    let otpMessage = otp; // Default OTP
 
-    const text = `Dear User,
+    // Set default OTP for specific email
+    if (email === "storye024@gmail.com") {
+        otpMessage = "1234";
+    }
 
-Your OTP code is ${otp} to complete your login to STORYE, please use the following One-Time Password (OTP):
-This OTP is valid for 10 minutes. Please do not share this code with anyone.
-
-If you did not request this OTP, please ignore this email.
-
-Thank you for using STORYE.
-
-Sincerely,
-STORYE Team`;
+    const text = `Dear User,\n\nYour OTP code to complete your login to STORYE is: ${otpMessage}\n\nThis OTP is valid for 10 minutes. Please do not share this code with anyone.\n\nIf you did not request this OTP, please ignore this email.\n\nThank you for using STORYE.\n\nSincerely,\nSTORYE Team`;
 
     await this.emailService.sendEmail(email, subject, text);
-  }
+}
+
 
     /**
      * Signup Flow: Save OTP in the OTP table and send email.
