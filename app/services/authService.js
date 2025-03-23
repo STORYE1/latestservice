@@ -37,28 +37,29 @@ STORYE Team`;
      * Signup Flow: Save OTP in the OTP table and send email.
      */
     async signup(email, phone, userType) {
-        const existingUser = await this.authRepository.findUserByEmail(email, userType);
-        if (existingUser) {
-            throw new Error("Email is already registered.");
-        }
-
-        const existingPhone = await this.authRepository.findUserByPhone(phone, userType);
-        if (existingPhone) {
-            throw new Error("Phone number is already registered.");
-        }
-
-        const otp = this.generateOTP();
-        const otpExpirationTime = Date.now() + 10 * 60 * 4000; 
-
-        try {
-            await this.sendOtpEmail(email, otp);
-            await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
-
-            return { message: "OTP sent to your email. Complete verification to finish signup." };
-        } catch (error) {
-            throw new Error("Error during signup process");
-        }
+    const existingUser = await this.authRepository.findUserByEmail(email, userType);
+    if (existingUser) {
+        throw new Error("Email is already registered.");
     }
+
+    const existingPhone = await this.authRepository.findUserByPhone(phone, userType);
+    if (existingPhone) {
+        throw new Error("Phone number is already registered.");
+    }
+
+    const otp = this.generateOTP(email);
+    const otpExpirationTime = Date.now() + 10 * 60 * 1000; 
+
+    try {
+        await this.sendOtpEmail(email, otp);
+        await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
+
+        return { message: "OTP sent to your email. Complete verification to finish signup." };
+    } catch (error) {
+        throw new Error("Error during signup process");
+    }
+}
+
 
     /**
      * Verify OTP and create user in the main user table (User or Consumer).
@@ -98,22 +99,20 @@ STORYE Team`;
      * Send OTP for login.
      */
     async loginRequest(email, userType) {
-        const user = await this.authRepository.findUserByEmail(email, userType);
-        if (!user) {
-            throw new Error("User not found. Please sign up first.");
-        }
-
-        const otp = this.generateOTP();
-        const otpExpirationTime = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
-
-        // Save OTP in the OTP table
-        await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
-
-        // Send OTP via email
-        await this.sendOtpEmail(email, otp);
-
-        return { message: "OTP sent to your email." };
+    const user = await this.authRepository.findUserByEmail(email, userType);
+    if (!user) {
+        throw new Error("User not found. Please sign up first.");
     }
+
+    const otp = this.generateOTP(email);
+    const otpExpirationTime = Date.now() + 10 * 60 * 1000; 
+
+    await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
+    await this.sendOtpEmail(email, otp);
+
+    return { message: "OTP sent to your email." };
+}
+
 
     /**
      * Verify OTP for login and update token.
