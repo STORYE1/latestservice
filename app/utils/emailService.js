@@ -12,14 +12,19 @@ class EmailService {
         });
     }
 
-    async sendEmail(to,subject,text){
-        await this.transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to,
-            subject,
-            text,
-        });
-    }
+    async sendEmail(to, subject, text) {
+    await this.transporter.sendMail({
+        from: `"STORYE Team" <${process.env.EMAIL_USER}>`,
+        to,
+        subject,
+        text,
+        headers: {
+            "X-Priority": "3", 
+            "X-Mailer": "STORYE App", 
+        },
+    });
+}
+
 }
 
 module.exports = EmailService;
