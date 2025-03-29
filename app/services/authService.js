@@ -100,6 +100,8 @@ class AuthService {
 
     await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
     await this.sendOtpEmail(email, otp);
+    await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
+    await this.sendOtpEmail(email, otp);
 
     return { message: "OTP sent to your email." };
   }
@@ -185,3 +187,4 @@ class AuthService {
 }
 
 module.exports = new AuthService();
+
