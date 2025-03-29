@@ -2233,3 +2233,30 @@
 2025-01-26T11:32:53.052Z info: Decoded token: {"userId":1,"email":"mithleshgupta241@gmail.com","iat":1737891172,"exp":1738495972}
 2025-01-26T11:33:08.624Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoibWl0aGxlc2hndXB0YTI0MUBnbWFpbC5jb20iLCJpYXQiOjE3Mzc4OTExNzIsImV4cCI6MTczODQ5NTk3Mn0.2WN5iZA4Audi7mQDqbe2iRwRRT8Tp3jHhrMqtD81FIk
 2025-01-26T11:33:08.625Z info: Decoded token: {"userId":1,"email":"mithleshgupta241@gmail.com","iat":1737891172,"exp":1738495972}
+2025-03-23T05:14:54.923Z info: Server is running on port 8086
+2025-03-23T05:14:58.348Z info: Database connection has been established successfully.
+2025-03-23T05:26:16.640Z info: Server is running on port 8086
+2025-03-23T05:26:20.370Z info: Database connection has been established successfully.
+2025-03-28T14:25:44.494Z info: Server is running on port 8086
+2025-03-28T14:25:48.480Z info: Database connection has been established successfully.
+2025-03-28T14:26:51.417Z error: Authorization header is missing or invalid
+2025-03-28T14:27:23.087Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI4LCJlbWFpbCI6InN0b3J5ZTAyNEBnbWFpbC5jb20iLCJpYXQiOjE3NDI3MTEwOTgsImV4cCI6MTc0MzMxNTg5OH0.b8Lxygf5XfD-393I_51VCsV50n8M8VY8bYlxb_rFLAc
+2025-03-28T14:27:23.091Z info: Decoded token: {"userId":28,"email":"storye024@gmail.com","iat":1742711098,"exp":1743315898}
+2025-03-28T14:27:50.876Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI4LCJlbWFpbCI6InN0b3J5ZTAyNEBnbWFpbC5jb20iLCJpYXQiOjE3NDI3MTEwOTgsImV4cCI6MTc0MzMxNTg5OH0.b8Lxygf5XfD-393I_51VCsV50n8M8VY8bYlxb_rFLAc
+2025-03-28T14:27:50.878Z info: Decoded token: {"userId":28,"email":"storye024@gmail.com","iat":1742711098,"exp":1743315898}
+2025-03-28T14:28:29.165Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImVtYWlsIjoia2hhbi5hcnNoYWQ2MjNAZ21haWwuY29tIiwiaWF0IjoxNzQyNzI4OTM2LCJleHAiOjE3NDMzMzM3MzZ9.5n91MF-kOEzWqh_NdpezZdcub8Ym9vBD-zfZkhe4BGA
+2025-03-28T14:28:29.166Z info: Decoded token: {"userId":6,"email":"khan.arshad623@gmail.com","iat":1742728936,"exp":1743333736}
+2025-03-28T15:08:41.831Z info: Server is running on port 8086
+2025-03-28T15:08:47.043Z info: Database connection has been established successfully.
+2025-03-28T15:10:05.037Z info: Server is running on port 8086
+2025-03-28T15:10:09.538Z info: Database connection has been established successfully.
+2025-03-28T16:13:33.743Z info: Server is running on port 8086
+2025-03-28T16:13:37.156Z info: Database connection has been established successfully.
+2025-03-28T17:32:21.851Z info: Server is running on port 8086
+2025-03-28T17:32:26.096Z info: Database connection has been established successfully.
+2025-03-28T17:33:54.103Z info: Server is running on port 8086
+2025-03-28T17:33:59.551Z info: Database connection has been established successfully.
+2025-03-28T17:35:19.580Z info: Server is running on port 8086
+2025-03-28T17:35:22.920Z info: Database connection has been established successfully.
+2025-03-29T08:29:53.195Z info: Server is running on port 8086
+2025-03-29T08:29:57.550Z info: Database connection has been established successfully.

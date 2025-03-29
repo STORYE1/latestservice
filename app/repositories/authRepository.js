@@ -34,16 +34,14 @@ class AuthRepository {
         return await Model.create(userData);
     }
 
-    // Update user details
     async updateUser(updatedData, userType) {
         const Model = this.getModel(userType);
         return await Model.update(updatedData, { where: { email: updatedData.email } });
     }
 
-    // Save OTP
     async saveOtp(email, otp, otpExpirationTime, userType) {
-        console.log("GuideOTP Model:", GuideOTP);  // Check if this prints the correct model object
-        console.log("ConsumerOTP Model:", ConsumerOTP);  // Similarly check this model
+        console.log("GuideOTP Model:", GuideOTP);
+        console.log("ConsumerOTP Model:", ConsumerOTP);
 
         console.log("these are the values in saveotp repo ", email, otp, otpExpirationTime, userType)
         const OtpModel = this.getOtpModel(userType);
@@ -57,23 +55,38 @@ class AuthRepository {
         return await OtpModel.create({ email, otp, otpExpirationTime });
     }
 
-    // Find OTP by email
     async findOtpByEmail(email, userType) {
         const OtpModel = this.getOtpModel(userType);
         return await OtpModel.findOne({ where: { email } });
     }
 
-    // Find user by ID
     async findUserById(userId, userType) {
         const Model = this.getModel(userType);
         return await Model.findByPk(userId);
     }
 
-    // Check user email and token status
     async findUserByEmailCheckStatus(email, userType) {
         const Model = this.getModel(userType);
         return await Model.findOne({ where: { email }, attributes: ['email', 'token'] });
     }
+
+    async getAllUsers() {
+        return await User.findAll({ attributes: ['user_id', 'email', 'phone', 'is_verified'] });
+    }
+
+
+    async updateVerificationStatus(userIds, isVerified) {
+        const updatedUsers = await User.update(
+            { is_verified: isVerified },
+            { where: { user_id: userIds } }
+        );
+
+        return updatedUsers;
+    }
+
+    async findUserById(user_id) {
+        return await User.findOne({ where: { user_id } });
+    };
 }
 
 module.exports = AuthRepository;
