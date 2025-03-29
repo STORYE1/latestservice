@@ -56,6 +56,52 @@ class AuthController {
             return res.status(400).json({ error: error.message });
         }
     }
+
+    async getAllUsers(req, res) {
+        try {
+            const users = await AuthService.getAllUsers();
+            return res.status(200).json(users);
+        } catch (error) {
+            return res.status(400).json({ error: error.message });
+        }
+    }
+
+    async updateVerificationStatus(req, res) {
+        try {
+            const { user_ids, is_verified } = req.body;
+
+            if (!Array.isArray(user_ids) || user_ids.length === 0) {
+                return res.status(400).json({ message: "Invalid user IDs" });
+            }
+
+            const updatedUsers = await AuthService.updateVerificationStatus(user_ids, is_verified);
+
+            return res.status(200).json({
+                message: "Verification status updated successfully",
+                updatedUsers
+            });
+        } catch (error) {
+            console.error("Error updating verification status:", error);
+            return res.status(500).json({ message: "Internal server error" });
+        }
+    }
+
+    async checkVerification (req, res)  {
+        try {
+            const { user_id } = req.params;
+            const isVerified = await AuthService.checkUserVerification(user_id);
+
+            if (isVerified === null) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            res.json({ user_id, is_verified: isVerified });
+        } catch (error) {
+            console.error("Error checking user verification:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    }
+
 }
 
 module.exports = new AuthController();
