@@ -10,7 +10,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: 'https://stroyeadminpanel-nprp51i8y-storyes-projects.vercel.app', 
+    origin: 'https://stroyeadminpanel.vercel.app/', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     allowedHeaders: ['Content-Type', 'Authorization'], 
 }));
