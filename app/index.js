@@ -8,15 +8,20 @@ const routes = require("./routes");
 
 const app = express();
 
+
+app.use(cors({
+    origin: 'https://stroyeadminpanel-nprp51i8y-storyes-projects.vercel.app', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+}));
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors());
 app.use(rateLimiter);
 
 app.use("/api", routes);
 app.set('trust proxy', true);
-
 
 const db = require("./models");
 
