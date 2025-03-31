@@ -9,11 +9,7 @@ const routes = require("./routes");
 const app = express();
 
 
-app.use(cors({
-    origin: 'https://stroyeadminpanel.vercel.app/', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    allowedHeaders: ['Content-Type', 'Authorization'], 
-}));
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
