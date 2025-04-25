@@ -35,13 +35,14 @@ class TourController {
 
             if (days) {
                 try {
-                   
+                    // If `days` is a string, parse it first
                     const parsed = typeof days === 'string' ? JSON.parse(days) : days;
 
+                    // If it's already an array, use it. If it's a single object, wrap it in an array.
                     parsedDays = Array.isArray(parsed) ? parsed : [parsed];
                 } catch (err) {
-                    console.error("Invalid JSON in 'days':", days);
-                    return failureResponse(res, 400, 'Invalid JSON format for days');
+                    console.error("Invalid days format:", days);
+                    return failureResponse(res, 400, 'Invalid format for days');
                 }
             }
 
