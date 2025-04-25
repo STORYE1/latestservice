@@ -31,6 +31,12 @@ class TourController {
             console.log('Received Files:', req.files);
 
 
+            let parsedDays = [];
+            if (days) {
+                const parsedInput = JSON.parse(days);
+                parsedDays = Array.isArray(parsedInput) ? parsedInput : [parsedInput];
+            }
+
             const parsedData = {
                 user_id,
                 tour_name,
@@ -49,12 +55,9 @@ class TourController {
                 tour_duration: tour_duration ? tour_duration.trim() : null,
                 tour_includes: tour_includes ? JSON.parse(tour_includes) : [],
                 tour_excludes: tour_excludes ? JSON.parse(tour_excludes) : [],
-                tour_days: days
-                    ? (Array.isArray(days)
-                        ? days.map(day => JSON.parse(day)) 
-                        : [JSON.parse(days)]) 
-                    : [],
+                tour_days: parsedDays,
             };
+
 
 
             const leaderProfilePicFile = req.files?.leader_profile_pic?.[0];
