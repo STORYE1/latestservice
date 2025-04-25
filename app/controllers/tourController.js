@@ -32,22 +32,26 @@ class TourController {
 
             // ✅ Safely parse and validate `days`
             let parsedDays = [];
-            if (days) {
+            if (req.body.days) {
                 try {
-                    const rawDays = typeof days === 'string' ? JSON.parse(days) : days;
-                    const arrayDays = Array.isArray(rawDays) ? rawDays : [rawDays];
+                    parsedDays = JSON.parse(req.body.days);
 
-                    parsedDays = arrayDays
-                        .filter(d => d && d.day && Array.isArray(d.times)) // basic validation
-                        .map(d => ({
-                            day: d.day,
-                            times: d.times,
-                        }));
+                    // Optional: validation
+                    if (!Array.isArray(parsedDays)) {
+                        return failureResponse(res, 400, 'Days must be an array');
+                    }
+
+                    // Optional: further validation per item
+                    parsedDays = parsedDays
+                        .filter(d => d && d.day && Array.isArray(d.times))
+                        .map(d => ({ day: d.day, times: d.times }));
+
                 } catch (err) {
-                    console.error("Invalid days format:", days);
-                    return failureResponse(res, 400, 'Invalid format for days');
+                    console.error('Failed to parse days:', err);
+                    return failureResponse(res, 400, 'Invalid JSON format in days');
                 }
             }
+
 
             const parsedData = {
                 user_id,
@@ -156,7 +160,7 @@ class TourController {
                     : [],
             };
 
-          
+
             const leaderProfilePicFile = req.files?.leader_profile_pic?.[0];
             const leaderProfilePicURL = leaderProfilePicFile?.location;
 
