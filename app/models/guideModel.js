@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
                 allowNull: true,
             },
             languages: {
-                type: DataTypes.ARRAY(DataTypes.STRING),  // Store languages as a JSON array
+                type: DataTypes.ARRAY(DataTypes.STRING),  
                 allowNull: true,
             },
             ticket_price: {
@@ -46,18 +46,18 @@ module.exports = (sequelize) => {
                 allowNull: true,
             },
             tour_duration: {
-                type: DataTypes.STRING,  // Can be a string (e.g., "2 Hours")
+                type: DataTypes.STRING,  
                 allowNull: true,
             },
             tour_days: {
-                type: DataTypes.JSONB,  // Store the days and times as a JSON object
+                type: DataTypes.JSONB, 
                 allowNull: true,
             },
             city_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'cities',  // Ensure the referenced model is correct
+                    model: 'cities',  
                     key: 'city_id',
                 },
             },
