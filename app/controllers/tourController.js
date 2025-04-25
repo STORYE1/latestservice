@@ -29,11 +29,22 @@ class TourController {
 
             console.log('Received Data:', req.body);
             console.log('Received Files:', req.files);
+            console.log('TYPE OF req.body.days:', typeof req.body.days);
+            console.log('ACTUAL req.body.days:', req.body.days);
+
 
             let parsedDays = [];
             if (req.body.days) {
                 try {
-                    const rawDays = typeof req.body.days === 'string' ? JSON.parse(req.body.days) : req.body.days;
+                    let rawDays;
+
+                    if (typeof req.body.days === 'string') {
+                        console.log("Parsing days string...");
+                        rawDays = JSON.parse(req.body.days);
+                    } else {
+                        console.log("Already parsed days object...");
+                        rawDays = req.body.days;
+                    }
 
                     const daysArray = Array.isArray(rawDays) ? rawDays : [rawDays];
 
@@ -43,11 +54,13 @@ class TourController {
                             day: d.day.trim(),
                             times: d.times,
                         }));
+
                 } catch (err) {
-                    console.error('Failed to parse days:', err);
+                    console.error('❌ Failed to parse days:', err);
                     return failureResponse(res, 400, 'Invalid JSON format in days');
                 }
             }
+
 
 
 
