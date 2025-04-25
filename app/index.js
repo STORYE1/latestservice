@@ -8,15 +8,16 @@ const routes = require("./routes");
 
 const app = express();
 
+
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors());
 app.use(rateLimiter);
 
 app.use("/api", routes);
 app.set('trust proxy', true);
-
 
 const db = require("./models");
 
