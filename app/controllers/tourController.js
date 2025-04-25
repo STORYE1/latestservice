@@ -33,14 +33,12 @@ class TourController {
             let parsedDays = [];
             if (req.body.days) {
                 try {
-                    const rawDays = JSON.parse(req.body.days);
+                    const rawDays = typeof req.body.days === 'string' ? JSON.parse(req.body.days) : req.body.days;
 
-                    // Ensure rawDays is an array
                     const daysArray = Array.isArray(rawDays) ? rawDays : [rawDays];
 
-                    // Process the days array
                     parsedDays = daysArray
-                        .filter(d => d && d.day && Array.isArray(d.times)) // Ensure valid structure
+                        .filter(d => d && d.day && Array.isArray(d.times))
                         .map(d => ({
                             day: d.day.trim(),
                             times: d.times,
@@ -50,6 +48,7 @@ class TourController {
                     return failureResponse(res, 400, 'Invalid JSON format in days');
                 }
             }
+
 
 
             const parsedData = {
