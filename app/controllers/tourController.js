@@ -40,30 +40,32 @@ class TourController {
                 ticket_price,
                 leader_name,
                 leader_description,
-                tour_days: days ? days.map(day => JSON.parse(day)) : [],
                 city_id,
                 category_id,
                 guide_name,
                 guide_phone,
                 guide_email_id,
                 meeting_point,
-                tour_duration,
+                tour_duration: tour_duration ? tour_duration.trim() : null,
                 tour_includes: tour_includes ? JSON.parse(tour_includes) : [],
                 tour_excludes: tour_excludes ? JSON.parse(tour_excludes) : [],
+                tour_days: days
+                    ? (Array.isArray(days) ? days.map(day => JSON.parse(day)) : [JSON.parse(days)])
+                    : [], 
             };
 
-            
+
             const leaderProfilePicFile = req.files?.leader_profile_pic?.[0];
             const leaderProfilePicURL = leaderProfilePicFile?.location;
 
-            
+
             const coverPhotoFile = req.files?.cover_photo?.[0];
             const coverPhotoURL = coverPhotoFile?.location;
 
-           
+
             const mediaFiles = req.files?.media?.map(file => file.location) || [];
 
-           
+
             if (!leaderProfilePicURL) {
                 throw new Error('Leader profile picture is required.');
             }
@@ -72,14 +74,14 @@ class TourController {
                 throw new Error('Cover photo is required.');
             }
 
-            
+
             parsedData.leader_profile_pic = leaderProfilePicURL;
             parsedData.cover_photo = coverPhotoURL;
 
-            
+
             const result = await TourService.createTourWithMedia(parsedData, mediaFiles);
 
-            
+
             return successResponse(res, 201, {
                 message: 'Tour created successfully',
                 data: result,
@@ -96,7 +98,7 @@ class TourController {
         try {
             const { tourId } = req.params;
 
-            // Extract data from the request body
+
             const {
                 tour_name,
                 tour_title,
@@ -105,7 +107,7 @@ class TourController {
                 ticket_price,
                 leader_name,
                 leader_description,
-                days, // Extract 'days' instead of 'tour_days'
+                days,
                 city_id,
                 category_id,
                 guide_name,
@@ -138,10 +140,12 @@ class TourController {
                 tour_duration: tour_duration ? tour_duration.trim() : null,
                 tour_includes: tour_includes ? JSON.parse(tour_includes) : [],
                 tour_excludes: tour_excludes ? JSON.parse(tour_excludes) : [],
-                tour_days: days ? days.map(day => JSON.parse(day)) : [], // Parse days to create tour_days
+                tour_days: days
+                    ? (Array.isArray(days) ? days.map(day => JSON.parse(day)) : [JSON.parse(days)])
+                    : [],
             };
 
-            // Handle media files
+          
             const leaderProfilePicFile = req.files?.leader_profile_pic?.[0];
             const leaderProfilePicURL = leaderProfilePicFile?.location;
 
@@ -310,34 +314,34 @@ class TourController {
 
 
     async getUserTourTitles(req, res) {
-    try {
-        const userId = req.user.userId;
+        try {
+            const userId = req.user.userId;
 
-        const tours = await TourRepository.getUserTourTitles(userId);
+            const tours = await TourRepository.getUserTourTitles(userId);
 
-        return res.status(200).json({
-            success: true,
-            message: 'Tour titles fetched successfully',
-            tours: tours || [], // Ensure tours is always an array
-        });
-    } catch (error) {
-        console.error('Error fetching user tour titles:', error);
+            return res.status(200).json({
+                success: true,
+                message: 'Tour titles fetched successfully',
+                tours: tours || [], // Ensure tours is always an array
+            });
+        } catch (error) {
+            console.error('Error fetching user tour titles:', error);
 
-        // Send a clear error code for invalid tokens
-        if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
-            return res.status(401).json({
+            // Send a clear error code for invalid tokens
+            if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Invalid or expired token',
+                });
+            }
+
+            return res.status(500).json({
                 success: false,
-                message: 'Invalid or expired token',
+                message: 'Failed to fetch user tour titles',
+                error: error.message,
             });
         }
-
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to fetch user tour titles',
-            error: error.message,
-        });
     }
-}
 
 
 

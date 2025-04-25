@@ -2,10 +2,15 @@ const AuthService = require('../services/authService');
 
 class AuthController {
     async signup(req, res) {
-        const { email, phone, userType } = req.body;
+        let { email, phone, userType, gender, dob, instagram, city } = req.body;
+
+        if (userType === "consumer") {
+            instagram = undefined;
+            city = undefined;
+        }
 
         try {
-            const result = await AuthService.signup(email, phone, userType);
+            const result = await AuthService.signup(email, phone, userType, gender, dob, instagram, city);
             return res.status(200).json(result);
         } catch (error) {
             return res.status(400).json({ error: error.message });
@@ -86,7 +91,7 @@ class AuthController {
         }
     }
 
-    async checkVerification (req, res)  {
+    async checkVerification(req, res) {
         try {
             const { user_id } = req.params;
             const isVerified = await AuthService.checkUserVerification(user_id);

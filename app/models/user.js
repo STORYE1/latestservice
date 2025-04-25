@@ -1,5 +1,4 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/sequelizeConnection");
 
 module.exports = (sequelize) => {
     const User = sequelize.define("User", {
@@ -21,7 +20,6 @@ module.exports = (sequelize) => {
             allowNull: false,
             unique: true,
         },
-
         token: {
             type: DataTypes.TEXT,
             allowNull: true,
@@ -46,6 +44,22 @@ module.exports = (sequelize) => {
         },
         updated_by: {
             type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        gender: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        dob: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        instagram: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        city: {
+            type: DataTypes.STRING,
             allowNull: true,
         },
     },
