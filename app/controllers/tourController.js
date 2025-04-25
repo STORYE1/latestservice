@@ -30,21 +30,21 @@ class TourController {
             console.log('Received Data:', req.body);
             console.log('Received Files:', req.files);
 
-            // ✅ Safely parse and validate `days`
             let parsedDays = [];
             if (req.body.days) {
                 try {
-                    parsedDays = JSON.parse(req.body.days);
+                    const rawDays = JSON.parse(req.body.days);
 
-                    // Optional: validation
-                    if (!Array.isArray(parsedDays)) {
+                    if (!Array.isArray(rawDays)) {
                         return failureResponse(res, 400, 'Days must be an array');
                     }
 
-                    // Optional: further validation per item
-                    parsedDays = parsedDays
+                    parsedDays = rawDays
                         .filter(d => d && d.day && Array.isArray(d.times))
-                        .map(d => ({ day: d.day, times: d.times }));
+                        .map(d => ({
+                            day: d.day.trim(),
+                            times: d.times,
+                        }));
 
                 } catch (err) {
                     console.error('Failed to parse days:', err);
