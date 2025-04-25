@@ -35,7 +35,7 @@ class TourController {
                 try {
                     const rawDays = JSON.parse(req.body.days);
 
-                    // If rawDays is not an array, wrap it in an array
+                    // Ensure rawDays is an array
                     const daysArray = Array.isArray(rawDays) ? rawDays : [rawDays];
 
                     // Process the days array
