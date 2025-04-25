@@ -50,8 +50,10 @@ class TourController {
                 tour_includes: tour_includes ? JSON.parse(tour_includes) : [],
                 tour_excludes: tour_excludes ? JSON.parse(tour_excludes) : [],
                 tour_days: days
-                    ? (Array.isArray(days) ? days.map(day => JSON.parse(day)) : [JSON.parse(days)])
-                    : [], 
+                    ? (Array.isArray(days)
+                        ? days.map(day => JSON.parse(day)) 
+                        : [JSON.parse(days)]) 
+                    : [],
             };
 
 
@@ -141,7 +143,9 @@ class TourController {
                 tour_includes: tour_includes ? JSON.parse(tour_includes) : [],
                 tour_excludes: tour_excludes ? JSON.parse(tour_excludes) : [],
                 tour_days: days
-                    ? (Array.isArray(days) ? days.map(day => JSON.parse(day)) : [JSON.parse(days)])
+                    ? (Array.isArray(days)
+                        ? days.map(day => JSON.parse(day)) // If `days` is an array, parse each element
+                        : [JSON.parse(days)]) // If `days` is a single string, parse it and wrap in an array
                     : [],
             };
 
