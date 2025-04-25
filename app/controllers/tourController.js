@@ -30,22 +30,24 @@ class TourController {
             console.log('Received Data:', req.body);
             console.log('Received Files:', req.files);
 
-
+            // ✅ Safely parse and validate `days`
             let parsedDays = [];
-
             if (days) {
                 try {
-                    // If `days` is a string, parse it first
-                    const parsed = typeof days === 'string' ? JSON.parse(days) : days;
+                    const rawDays = typeof days === 'string' ? JSON.parse(days) : days;
+                    const arrayDays = Array.isArray(rawDays) ? rawDays : [rawDays];
 
-                    // If it's already an array, use it. If it's a single object, wrap it in an array.
-                    parsedDays = Array.isArray(parsed) ? parsed : [parsed];
+                    parsedDays = arrayDays
+                        .filter(d => d && d.day && Array.isArray(d.times)) // basic validation
+                        .map(d => ({
+                            day: d.day,
+                            times: d.times,
+                        }));
                 } catch (err) {
                     console.error("Invalid days format:", days);
                     return failureResponse(res, 400, 'Invalid format for days');
                 }
             }
-
 
             const parsedData = {
                 user_id,
@@ -68,18 +70,13 @@ class TourController {
                 tour_days: parsedDays,
             };
 
-
-
             const leaderProfilePicFile = req.files?.leader_profile_pic?.[0];
             const leaderProfilePicURL = leaderProfilePicFile?.location;
-
 
             const coverPhotoFile = req.files?.cover_photo?.[0];
             const coverPhotoURL = coverPhotoFile?.location;
 
-
             const mediaFiles = req.files?.media?.map(file => file.location) || [];
-
 
             if (!leaderProfilePicURL) {
                 throw new Error('Leader profile picture is required.');
@@ -89,13 +86,10 @@ class TourController {
                 throw new Error('Cover photo is required.');
             }
 
-
             parsedData.leader_profile_pic = leaderProfilePicURL;
             parsedData.cover_photo = coverPhotoURL;
 
-
             const result = await TourService.createTourWithMedia(parsedData, mediaFiles);
-
 
             return successResponse(res, 201, {
                 message: 'Tour created successfully',
