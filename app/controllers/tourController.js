@@ -35,17 +35,23 @@ class TourController {
                 try {
                     const rawDays = JSON.parse(req.body.days);
 
-                    if (!Array.isArray(rawDays)) {
-                        return failureResponse(res, 400, 'Days must be an array');
+                    // Check if rawDays is an array or a single object
+                    if (Array.isArray(rawDays)) {
+                        parsedDays = rawDays
+                            .filter(d => d && d.day && Array.isArray(d.times))
+                            .map(d => ({
+                                day: d.day.trim(),
+                                times: d.times,
+                            }));
+                    } else if (rawDays && rawDays.day && Array.isArray(rawDays.times)) {
+                        // If rawDays is a single object, wrap it in an array
+                        parsedDays = [{
+                            day: rawDays.day.trim(),
+                            times: rawDays.times,
+                        }];
+                    } else {
+                        return failureResponse(res, 400, 'Invalid format for days');
                     }
-
-                    parsedDays = rawDays
-                        .filter(d => d && d.day && Array.isArray(d.times))
-                        .map(d => ({
-                            day: d.day.trim(),
-                            times: d.times,
-                        }));
-
                 } catch (err) {
                     console.error('Failed to parse days:', err);
                     return failureResponse(res, 400, 'Invalid JSON format in days');
