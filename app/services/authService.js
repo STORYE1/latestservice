@@ -18,9 +18,9 @@ class AuthService {
 
   async sendOtpEmail(email, otp) {
     const subject = "OTP Code";
-    let otpMessage = otp; 
+    let otpMessage = otp;
 
-    
+
     if (email === "storye024@gmail.com") {
       otpMessage = "1234";
     }
@@ -31,7 +31,7 @@ class AuthService {
   }
 
 
-  async signup(email, phone, userType) {
+  async signup(email, phone, userType, gender, dob, instagram, city) {
     const existingUser = await this.authRepository.findUserByEmail(email, userType);
     if (existingUser) {
       throw new Error("Email is already registered.");
@@ -42,17 +42,11 @@ class AuthService {
       throw new Error("Phone number is already registered.");
     }
 
-    const otp = this.generateOTP(email);
-    const otpExpirationTime = Date.now() + 10 * 60 * 1000;
+    const userData = { email, phone, gender, dob, instagram, city };
 
-    try {
-      await this.sendOtpEmail(email, otp);
-      await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
+    const newUser = await this.authRepository.createUser(userData, userType);
 
-      return { message: "OTP sent to your email. Complete verification to finish signup." };
-    } catch (error) {
-      throw new Error("Error during signup process");
-    }
+    return { message: "Signup successful", user: newUser };
   }
 
   async verifySignupOtp(email, otp, userType, phone) {
@@ -88,7 +82,7 @@ class AuthService {
     return { message: "Signup successful.", token };
   }
 
- 
+
   async loginRequest(email, userType) {
     const user = await this.authRepository.findUserByEmail(email, userType);
     if (!user) {
@@ -176,12 +170,11 @@ class AuthService {
     return await this.authRepository.updateVerificationStatus(userIds, isVerified);
   }
 
-  async checkUserVerification (user_id) {
+  async checkUserVerification(user_id) {
     const user = await this.authRepository.findUserById(user_id);
-    return user ? user.is_verified : null; 
+    return user ? user.is_verified : null;
   };
 
- 
 
 
 }
