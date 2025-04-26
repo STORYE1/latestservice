@@ -32,6 +32,15 @@ class AuthService {
 
 
   async signup(email, phone, userType, gender, dob, instagram, city) {
+    console.log("Received in AuthService.signup:");
+    console.log("Email:", email);
+    console.log("Phone:", phone);
+    console.log("UserType:", userType);
+    console.log("Gender:", gender);
+    console.log("DOB:", dob);
+    console.log("Instagram:", instagram);
+    console.log("City:", city);
+
     const existingUser = await this.authRepository.findUserByEmail(email, userType);
     if (existingUser) {
       throw new Error("Email is already registered.");
@@ -43,6 +52,7 @@ class AuthService {
     }
 
     const userData = { email, phone, gender, dob, instagram, city };
+    console.log("UserData to be saved:", userData);
 
     const newUser = await this.authRepository.createUser(userData, userType);
 

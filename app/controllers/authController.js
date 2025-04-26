@@ -4,6 +4,15 @@ class AuthController {
     async signup(req, res) {
         let { email, phone, userType, gender, dob, instagram, city } = req.body;
 
+        console.log("Received from frontend:");
+        console.log("Email:", email);
+        console.log("Phone:", phone);
+        console.log("UserType:", userType);
+        console.log("Gender:", gender);
+        console.log("DOB:", dob);
+        console.log("Instagram:", instagram);
+        console.log("City:", city);
+
         if (userType === "consumer") {
             instagram = undefined;
             city = undefined;
@@ -13,6 +22,7 @@ class AuthController {
             const result = await AuthService.signup(email, phone, userType, gender, dob, instagram, city);
             return res.status(200).json(result);
         } catch (error) {
+            console.error("Error in AuthController.signup:", error.message);
             return res.status(400).json({ error: error.message });
         }
     }

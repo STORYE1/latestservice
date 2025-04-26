@@ -29,9 +29,15 @@ class AuthRepository {
 
 
     async createUser(userData, userType) {
-        console.log("inside create user")
+        console.log("Received in AuthRepository.createUser:");
+        console.log("UserData:", userData);
+        console.log("UserType:", userType);
+
         const Model = this.getModel(userType);
-        return await Model.create(userData);
+        const newUser = await Model.create(userData);
+
+        console.log("New user created:", newUser);
+        return newUser;
     }
 
     async updateUser(updatedData, userType) {
