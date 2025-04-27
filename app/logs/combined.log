@@ -2264,3 +2264,33 @@
 2025-03-29T16:32:12.331Z info: Database connection has been established successfully.
 2025-03-29T16:36:30.037Z info: Server is running on port 8086
 2025-03-29T16:36:34.888Z info: Database connection has been established successfully.
+2025-04-26T09:41:14.255Z info: Server is running on port 8086
+2025-04-26T09:41:14.329Z error: Unable to connect to the database: SequelizeConnectionError: database "storye" does not exist
+2025-04-26T09:42:21.258Z info: Server is running on port 8086
+2025-04-26T09:42:21.825Z info: Database connection has been established successfully.
+2025-04-26T09:55:25.843Z info: Server is running on port 8086
+2025-04-26T09:55:26.306Z info: Database connection has been established successfully.
+2025-04-26T09:59:21.603Z info: Server is running on port 8086
+2025-04-26T09:59:22.079Z info: Database connection has been established successfully.
+2025-04-26T10:19:14.880Z info: Server is running on port 8086
+2025-04-26T10:19:15.409Z info: Database connection has been established successfully.
+2025-04-26T10:25:42.326Z info: Server is running on port 8086
+2025-04-26T10:25:42.751Z info: Database connection has been established successfully.
+2025-04-26T12:20:22.257Z info: Server is running on port 8086
+2025-04-26T12:20:22.658Z info: Database connection has been established successfully.
+2025-04-26T12:29:11.851Z info: Server is running on port 8086
+2025-04-26T12:29:12.216Z info: Database connection has been established successfully.
+2025-04-26T12:40:12.999Z info: Server is running on port 8086
+2025-04-26T12:40:13.083Z error: Unable to connect to the database: SequelizeConnectionError: database "storyedb" does not exist
+2025-04-26T16:24:55.441Z info: Server is running on port 8086
+2025-04-26T16:24:55.743Z info: Database connection has been established successfully.
+2025-04-26T16:56:31.147Z info: Server is running on port 8086
+2025-04-26T16:56:31.443Z info: Database connection has been established successfully.
+2025-04-26T17:03:23.621Z info: Server is running on port 8086
+2025-04-26T17:03:23.976Z info: Database connection has been established successfully.
+2025-04-27T03:35:20.482Z info: Server is running on port 8086
+2025-04-27T03:35:20.818Z info: Database connection has been established successfully.
+2025-04-27T03:40:52.748Z info: Server is running on port 8086
+2025-04-27T03:40:53.061Z info: Database connection has been established successfully.
+2025-04-27T03:43:23.258Z info: Server is running on port 8086
+2025-04-27T03:43:23.558Z info: Database connection has been established successfully.

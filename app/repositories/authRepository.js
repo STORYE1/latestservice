@@ -46,19 +46,22 @@ class AuthRepository {
     }
 
     async saveOtp(email, otp, otpExpirationTime, userType) {
-        console.log("GuideOTP Model:", GuideOTP);
-        console.log("ConsumerOTP Model:", ConsumerOTP);
+        console.log("Saving OTP for:", email, otp, otpExpirationTime, userType);
 
-        console.log("these are the values in saveotp repo ", email, otp, otpExpirationTime, userType)
-        const OtpModel = this.getOtpModel(userType);
-        console.log("this is otp model ", OtpModel)
+        const OtpModel = this.getOtpModel(userType); 
         const existingOtp = await OtpModel.findOne({ where: { email } });
 
         if (existingOtp) {
-            return await OtpModel.update({ otp, otpExpirationTime }, { where: { email } });
+            await OtpModel.update(
+                { otp, otpExpirationTime },
+                { where: { email } }
+            );
+            console.log("OTP updated for:", email);
+        } else {
+            // Create new OTP record
+            await OtpModel.create({ email, otp, otpExpirationTime });
+            console.log("OTP created for:", email);
         }
-
-        return await OtpModel.create({ email, otp, otpExpirationTime });
     }
 
     async findOtpByEmail(email, userType) {

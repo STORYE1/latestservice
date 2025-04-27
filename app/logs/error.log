@@ -123,3 +123,5 @@
 2025-01-20T07:10:13.161Z error: Error verifying token: jwt expired
 2025-01-20T08:16:12.988Z error: Error verifying token: jwt expired
 2025-03-28T14:26:51.417Z error: Authorization header is missing or invalid
+2025-04-26T09:41:14.329Z error: Unable to connect to the database: SequelizeConnectionError: database "storye" does not exist
+2025-04-26T12:40:13.083Z error: Unable to connect to the database: SequelizeConnectionError: database "storyedb" does not exist

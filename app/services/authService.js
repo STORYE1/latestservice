@@ -30,17 +30,8 @@ class AuthService {
     await this.emailService.sendEmail(email, subject, text);
   }
 
-
   async signup(email, phone, userType, gender, dob, instagram, city) {
-    console.log("Received in AuthService.signup:");
-    console.log("Email:", email);
-    console.log("Phone:", phone);
-    console.log("UserType:", userType);
-    console.log("Gender:", gender);
-    console.log("DOB:", dob);
-    console.log("Instagram:", instagram);
-    console.log("City:", city);
-
+    
     const existingUser = await this.authRepository.findUserByEmail(email, userType);
     if (existingUser) {
       throw new Error("Email is already registered.");
@@ -51,47 +42,48 @@ class AuthService {
       throw new Error("Phone number is already registered.");
     }
 
-    const userData = { email, phone, gender, dob, instagram, city };
-    console.log("UserData to be saved:", userData);
+    const otp = this.generateOTP(email);
+    const otpExpirationTime = Date.now() + 10 * 60 * 1000;
+    try {
+      await this.sendOtpEmail(email, otp);
 
-    const newUser = await this.authRepository.createUser(userData, userType);
+      await this.authRepository.saveOtp(email, otp, otpExpirationTime, userType);
 
-    return { message: "Signup successful", user: newUser };
+      return { message: "OTP sent to your email. Complete verification to finish signup." };
+    } catch (error) {
+      console.error("Error during signup process:", error.message);
+      throw new Error("Error during signup process");
+    }
   }
 
-  async verifySignupOtp(email, otp, userType, phone) {
-    console.log("this is verify signp otp ", email, otp, userType, phone);
+  async verifySignupOtp(email, otp, userType, phone, gender, dob, instagram, city) {
+    console.log("Verifying OTP for:", email);
+
     const otpRecord = await this.authRepository.findOtpByEmail(email, userType);
-    console.log("this is otp record ");
     if (!otpRecord) {
-      console.log(" i am here ");
-      throw new Error("OTP not found or expired. Please request a new OTP.");
+        throw new Error("OTP not found. Please request a new one.");
     }
 
     if (otpRecord.otp !== otp) {
-      throw new Error("Invalid OTP.");
+        throw new Error("Invalid OTP.");
     }
 
     if (Date.now() > otpRecord.otpExpirationTime) {
-      throw new Error("OTP has expired.");
+        throw new Error("OTP has expired. Please request a new one.");
     }
 
-    const newUser = await this.authRepository.createUser(
-      { email, phone },
-      userType
-    );
+    const userData = { email, phone, gender, dob, instagram, city };
+    console.log("Creating user with data:", userData);
 
-    console.log(" this is new suer ", newUser);
+    const newUser = await this.authRepository.createUser(userData, userType);
 
     const payload = { userId: newUser.user_id, email: newUser.email };
     const token = JwtService.generateToken(payload);
 
-
     await this.authRepository.updateUser({ email, token }, userType);
 
-    return { message: "Signup successful.", token };
-  }
-
+    return { message: "Signup successful", token, user: newUser };
+}
 
   async loginRequest(email, userType) {
     const user = await this.authRepository.findUserByEmail(email, userType);
@@ -110,9 +102,7 @@ class AuthService {
     return { message: "OTP sent to your email." };
   }
 
-  /**
-   * Verify OTP for login and update token.
-   */
+
   async loginVerify(email, otp, userType) {
     const otpRecord = await this.authRepository.findOtpByEmail(email, userType);
     if (!otpRecord) {
@@ -132,19 +122,15 @@ class AuthService {
       throw new Error("User not found.");
     }
 
-    // Generate token
     const payload = { userId: user.user_id, email: user.email };
     const token = JwtService.generateToken(payload);
 
-    // Update token in the user table
     await this.authRepository.updateUser({ email, token }, userType);
 
     return { message: "Login successful.", token };
   }
 
-  /**
-   * Retrieve user details from token.
-   */
+
   async getUserFromToken(token, userType) {
     try {
       const decoded = JwtService.verifyToken(token);
@@ -161,9 +147,6 @@ class AuthService {
     }
   }
 
-  /**
-   * Check user email and token status.
-   */
   async checkUserStatus(email, userType) {
     const user = await this.authRepository.findUserByEmailCheckStatus(
       email,
@@ -185,8 +168,12 @@ class AuthService {
     return user ? user.is_verified : null;
   };
 
-
-
+  getOtpModel(userType) {
+    console.log("Determining OTP model for userType:", userType);
+    if (userType === "guide") return GuideOTP;
+    if (userType === "consumer") return ConsumerOTP;
+    throw new Error("Invalid userType");
+}
 }
 
 module.exports = new AuthService();

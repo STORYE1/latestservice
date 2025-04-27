@@ -4,14 +4,7 @@ class AuthController {
     async signup(req, res) {
         let { email, phone, userType, gender, dob, instagram, city } = req.body;
 
-        console.log("Received from frontend:");
-        console.log("Email:", email);
-        console.log("Phone:", phone);
-        console.log("UserType:", userType);
-        console.log("Gender:", gender);
-        console.log("DOB:", dob);
-        console.log("Instagram:", instagram);
-        console.log("City:", city);
+        
 
         if (userType === "consumer") {
             instagram = undefined;
@@ -28,13 +21,14 @@ class AuthController {
     }
 
     async verifySignupOtp(req, res) {
-        const { email, otp, userType, phone } = req.body;
-        console.log("this is data ", email, otp, userType, phone)
+        const { email, otp, userType, phone, gender, dob, instagram, city } = req.body;
+        console.log("this is data ", email, otp, userType, phone, gender, dob, instagram, city);
 
         try {
-            const result = await AuthService.verifySignupOtp(email, otp, userType, phone);
+            const result = await AuthService.verifySignupOtp(email, otp, userType, phone, gender, dob, instagram, city);
             return res.status(200).json(result);
         } catch (error) {
+            console.error("Error in AuthController.verifySignupOtp:", error.message);
             return res.status(400).json({ error: error.message });
         }
     }
