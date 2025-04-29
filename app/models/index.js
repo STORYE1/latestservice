@@ -14,7 +14,6 @@ const sequelize = new Sequelize(
 
 const db = {};
 
-// Import models
 db.User = require("./user")(sequelize, Sequelize.DataTypes);
 db.Consumer = require("./consumer")(sequelize, Sequelize.DataTypes);
 db.Tour = require("./guideModel")(sequelize, Sequelize.DataTypes);
@@ -24,9 +23,7 @@ db.ConsumerOTP = require("./consumerOTP")(sequelize, Sequelize.DataTypes);
 db.GuideOTP = require("./guideOTP")(sequelize, Sequelize.DataTypes);
 db.City = require("./city")(sequelize, Sequelize.DataTypes);
 
-// Define associations
 
-// User and Tour relationship
 db.User.hasMany(db.Tour, {
     foreignKey: "user_id",
     as: "tours",

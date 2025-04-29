@@ -6,7 +6,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true, // Ensures each email has only one OTP
+        unique: true, 
       },
       otp: {
         type: Sequelize.STRING,

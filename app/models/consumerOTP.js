@@ -25,7 +25,10 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             defaultValue: sequelize.fn('NOW'),
         },
+    }, {
+        tableName: 'ConsumerOtps',  
     });
+
 
     return ConsumerOtp
 };

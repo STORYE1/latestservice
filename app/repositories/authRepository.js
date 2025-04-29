@@ -58,7 +58,6 @@ class AuthRepository {
             );
             console.log("OTP updated for:", email);
         } else {
-            // Create new OTP record
             await OtpModel.create({ email, otp, otpExpirationTime });
             console.log("OTP created for:", email);
         }

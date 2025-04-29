@@ -27,12 +27,6 @@ class TourController {
 
             const user_id = req.user.userId;
 
-            console.log('Received Data:', req.body);
-            console.log('Received Files:', req.files);
-            console.log('TYPE OF req.body.days:', typeof req.body.days);
-            console.log('ACTUAL req.body.days:', req.body.days);
-
-
             let parsedDays = [];
             if (req.body.days) {
                 try {
@@ -56,7 +50,7 @@ class TourController {
                         }));
 
                 } catch (err) {
-                    console.error('❌ Failed to parse days:', err);
+                    console.error('Failed to parse days:', err);
                     return failureResponse(res, 400, 'Invalid JSON format in days');
                 }
             }
@@ -145,7 +139,6 @@ class TourController {
 
             const user_id = req.user.userId;
 
-            // Prepare parsed data
             const parsedData = {
                 user_id,
                 tour_name,
@@ -166,8 +159,8 @@ class TourController {
                 tour_excludes: tour_excludes ? JSON.parse(tour_excludes) : [],
                 tour_days: days
                     ? (Array.isArray(days)
-                        ? days.map(day => JSON.parse(day)) // If `days` is an array, parse each element
-                        : [JSON.parse(days)]) // If `days` is a single string, parse it and wrap in an array
+                        ? days.map(day => JSON.parse(day)) 
+                        : [JSON.parse(days)])
                     : [],
             };
 
@@ -190,17 +183,13 @@ class TourController {
 
 
 
-            // Update the tour with parsed data and media files
             const updatedTour = await TourService.updateTourWithMedia(
                 tourId,
                 parsedData,
                 mediaFiles
             );
 
-            // Log the updated tour data
-            console.log('Updated Tour:', updatedTour);
 
-            // Return success response
             return successResponse(res, 200, {
                 message: 'Tour updated successfully',
                 data: updatedTour,
@@ -255,12 +244,12 @@ class TourController {
         try {
             const { tourId } = req.params;
 
-            // Call the service method to delete the tour
+            
             const result = await TourService.deleteTourById(tourId);
 
-            // Return success response
+           
             return res.status(200).json({
-                message: result.message, // Ensure this accesses the message property correctly
+                message: result.message,
             });
         } catch (error) {
             console.error('Error deleting tour:', error);
@@ -297,10 +286,10 @@ class TourController {
 
     async getAllToursConsumer(req, res) {
         try {
-            // Call the service method to fetch all tours
+            
             const tours = await TourService.getAllToursConsumers();
 
-            // Respond with a valid status code and body
+           
             return res.status(200).json({
                 message: 'Tours fetched successfully',
                 data: tours,
@@ -348,12 +337,12 @@ class TourController {
             return res.status(200).json({
                 success: true,
                 message: 'Tour titles fetched successfully',
-                tours: tours || [], // Ensure tours is always an array
+                tours: tours || [], 
             });
         } catch (error) {
             console.error('Error fetching user tour titles:', error);
 
-            // Send a clear error code for invalid tokens
+           
             if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
                 return res.status(401).json({
                     success: false,

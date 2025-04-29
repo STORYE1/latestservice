@@ -29,17 +29,14 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
-            otp: {
+
+            gender: {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
-            gender: {
-                type: DataTypes.STRING,
-                allowNull: true, 
-            },
             dob: {
                 type: DataTypes.DATE,
-                allowNull: true, 
+                allowNull: true,
             },
         },
         {
