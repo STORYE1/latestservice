@@ -249,15 +249,12 @@ class TourService {
                 tourPackageData.service_provider_pic = serviceProviderPicUrl;
             }
 
-
             if (files.package_cover_photo && files.package_cover_photo.length > 0) {
                 const packageCoverPhotoUrl = files.package_cover_photo[0].location;
                 tourPackageData.package_cover_photo = packageCoverPhotoUrl;
             }
 
-
             const tourPackage = await TourRepository.createTourPackage(tourPackageData);
-
 
             if (files.mediaFiles && files.mediaFiles.length > 0) {
                 const mediaPromises = files.mediaFiles.map(async (file) => {
@@ -273,7 +270,6 @@ class TourService {
                         type: type,
                         media_url: mediaUrl,
                     };
-
 
                     await packageMediaRepository.addMedia(mediaData);
                 });

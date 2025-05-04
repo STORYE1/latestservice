@@ -399,9 +399,12 @@ class TourController {
 
     async createTourPackageWithMedia(req, res) {
         try {
-            const tourPackageData = req.body; 
-            const mediaFiles = req.files; 
+            const user_id = req.user.userId; 
+            const tourPackageData = { ...req.body, user_id }; 
+            const mediaFiles = req.files;
+
             const result = await TourService.createTourPackageWithMedia(tourPackageData, mediaFiles);
+
             return res.status(201).json({ message: "Tour package created successfully", data: result });
         } catch (error) {
             console.error("Error in TourPackageController.createTourPackageWithMedia:", error.message);
@@ -413,14 +416,14 @@ class TourController {
         try {
             const { package_category, package_state } = req.query;
 
-           
+
             if (!package_category || !package_state) {
                 return res.status(400).json({ error: "package_category and package_state are required" });
             }
 
             const tours = await TourService.getToursByCategoryAndState(
                 parseInt(package_category, 10),
-                parseInt(package_state, 10) 
+                parseInt(package_state, 10)
             );
 
             return res.status(200).json({ message: "Tours fetched successfully", data: tours });

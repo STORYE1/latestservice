@@ -2352,3 +2352,7 @@
 2025-05-04T16:35:28.233Z info: Database connection has been established successfully.
 2025-05-04T16:57:18.660Z info: Server is running on port 8086
 2025-05-04T16:57:23.216Z info: Database connection has been established successfully.
+2025-05-04T18:07:17.918Z info: Server is running on port 8086
+2025-05-04T18:07:21.178Z info: Database connection has been established successfully.
+2025-05-04T18:07:46.619Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-04T18:07:46.631Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}
