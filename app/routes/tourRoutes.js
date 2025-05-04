@@ -60,6 +60,7 @@ router.get("/packages", TourController.getAllPackages);
 
 router.post(
     "/tourpackage",
+    AuthenticationMiddleware.authenticate,
     tourPackageUploadMiddleware,
     handleUploadErrors,
     TourController.createTourPackageWithMedia
