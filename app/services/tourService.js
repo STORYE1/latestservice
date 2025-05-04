@@ -1,7 +1,8 @@
 const TourRepository = require('../repositories/tourRepository');
 const MediaRepository = require('../repositories/mediaRepository');
 const s3 = require('../config/awsS3Config');
-const { Media } = require('../models');
+const { Media, PackageMedia, TourPackage } = require('../models');
+const packageMediaRepository = require('../repositories/packageMediaRepository');
 
 class TourService {
 
@@ -14,16 +15,16 @@ class TourService {
 
             const params = {
                 Bucket: process.env.AWS_S3_BUCKET_NAME,
-                Key: file.originalname, 
-                Body: file.buffer, 
+                Key: file.originalname,
+                Body: file.buffer,
                 ContentType: file.mimetype,
-                ACL: 'public-read', 
+                ACL: 'public-read',
             };
 
-            
+
             const data = await s3.upload(params).promise();
             console.log('File uploaded successfully:', data.Location);
-            return data.Location; 
+            return data.Location;
         } catch (error) {
             console.error('Error uploading to S3:', error);
             throw new Error('Error uploading to S3: ' + error.message);
@@ -154,7 +155,7 @@ class TourService {
     async deleteTourById(tourId) {
         try {
             const tour = await TourRepository.getTourById(tourId, {
-                include: [{ model: Media, as: 'media' }] 
+                include: [{ model: Media, as: 'media' }]
             });
 
             if (!tour) {
@@ -221,6 +222,87 @@ class TourService {
         return await TourRepository.getAllCategories();
     };
 
+    async getAllStates() {
+        try {
+            const states = await TourRepository.getAllStates();
+            return states;
+        } catch (error) {
+            console.error('Error fetching states:', error);
+            throw new Error('Failed to fetch states: ' + error.message);
+        }
+    }
+
+    async getAllPackages() {
+        try {
+            const packages = await TourRepository.getAllPackages();
+            return packages;
+        } catch (error) {
+            console.error('Error fetching packages:', error);
+            throw new Error('Failed to fetch packages: ' + error.message);
+        }
+    }
+
+    async createTourPackageWithMedia(tourPackageData, files) {
+        try {
+            if (files.service_provider_pic && files.service_provider_pic.length > 0) {
+                const serviceProviderPicUrl = files.service_provider_pic[0].location;
+                tourPackageData.service_provider_pic = serviceProviderPicUrl;
+            }
+
+
+            if (files.package_cover_photo && files.package_cover_photo.length > 0) {
+                const packageCoverPhotoUrl = files.package_cover_photo[0].location;
+                tourPackageData.package_cover_photo = packageCoverPhotoUrl;
+            }
+
+
+            const tourPackage = await TourRepository.createTourPackage(tourPackageData);
+
+
+            if (files.mediaFiles && files.mediaFiles.length > 0) {
+                const mediaPromises = files.mediaFiles.map(async (file) => {
+                    const mediaUrl = file.location;
+                    const type = file.mimetype.startsWith("image/")
+                        ? "image"
+                        : file.mimetype.startsWith("video/")
+                            ? "video"
+                            : "other";
+
+                    const mediaData = {
+                        package_id: tourPackage.package_id,
+                        type: type,
+                        media_url: mediaUrl,
+                    };
+
+
+                    await packageMediaRepository.addMedia(mediaData);
+                });
+
+                await Promise.all(mediaPromises);
+            }
+
+            return tourPackage;
+        } catch (error) {
+            console.error("Error in TourPackageService.createTourPackageWithMedia:", error.message);
+            throw new Error("Failed to create tour package");
+        }
+    }
+
+    async getToursByCategoryAndState(package_category, package_state) {
+        try {
+            const tours = await TourPackage.findAll({
+                where: {
+                    package_category,
+                    package_state,
+                },
+            });
+
+            return tours;
+        } catch (error) {
+            console.error("Error in TourService.getToursByCategoryAndState:", error.message);
+            throw new Error("Failed to fetch tours");
+        }
+    }
 
 }
 

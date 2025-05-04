@@ -1,12 +1,12 @@
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const aws = require('aws-sdk');
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const aws = require("aws-sdk");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 if (!bucketName) {
-    console.error('Error: S3_BUCKET_NAME is not defined in environment variables.');
+    console.error("Error: S3_BUCKET_NAME is not defined in environment variables.");
     process.exit(1);
 }
 
@@ -28,7 +28,7 @@ const upload = multer({
     storage: multerS3({
         s3: s3,
         bucket: process.env.AWS_BUCKET_NAME,
-        acl: 'public-read',
+        acl: "public-read",
         key: (req, file, cb) => {
             cb(null, `media/${Date.now()}-${file.originalname}`);
         },
@@ -42,10 +42,18 @@ const upload = multer({
     },
 });
 
-const uploadMiddleware = upload.fields([
-    { name: 'media', maxCount: 10 },
-    { name: 'leader_profile_pic', maxCount: 1 },
-    { name: 'cover_photo', maxCount: 1 },
+
+const tourUploadMiddleware = upload.fields([
+    { name: "media", maxCount: 10 },
+    { name: "leader_profile_pic", maxCount: 1 },
+    { name: "cover_photo", maxCount: 1 },
+]);
+
+
+const tourPackageUploadMiddleware = upload.fields([
+    { name: "mediaFiles", maxCount: 10 },
+    { name: "service_provider_pic", maxCount: 1 },
+    { name: "package_cover_photo", maxCount: 1 },
 ]);
 
 const handleUploadErrors = (err, req, res, next) => {
@@ -58,6 +66,7 @@ const handleUploadErrors = (err, req, res, next) => {
 };
 
 module.exports = {
-    uploadMiddleware,
+    tourUploadMiddleware,
+    tourPackageUploadMiddleware,
     handleUploadErrors,
 };

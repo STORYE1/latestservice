@@ -1,6 +1,6 @@
 const { successResponse, failureResponse } = require('../utils/responseHandler');
 const TourService = require('../services/tourService');
-const TourRepository = require('../repositories/tourRepository')
+const TourRepository = require('../repositories/tourRepository');
 
 class TourController {
     async createTourWithMedia(req, res) {
@@ -159,7 +159,7 @@ class TourController {
                 tour_excludes: tour_excludes ? JSON.parse(tour_excludes) : [],
                 tour_days: days
                     ? (Array.isArray(days)
-                        ? days.map(day => JSON.parse(day)) 
+                        ? days.map(day => JSON.parse(day))
                         : [JSON.parse(days)])
                     : [],
             };
@@ -244,10 +244,10 @@ class TourController {
         try {
             const { tourId } = req.params;
 
-            
+
             const result = await TourService.deleteTourById(tourId);
 
-           
+
             return res.status(200).json({
                 message: result.message,
             });
@@ -286,10 +286,10 @@ class TourController {
 
     async getAllToursConsumer(req, res) {
         try {
-            
+
             const tours = await TourService.getAllToursConsumers();
 
-           
+
             return res.status(200).json({
                 message: 'Tours fetched successfully',
                 data: tours,
@@ -337,12 +337,12 @@ class TourController {
             return res.status(200).json({
                 success: true,
                 message: 'Tour titles fetched successfully',
-                tours: tours || [], 
+                tours: tours || [],
             });
         } catch (error) {
             console.error('Error fetching user tour titles:', error);
 
-           
+
             if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
                 return res.status(401).json({
                     success: false,
@@ -379,6 +379,59 @@ class TourController {
         }
     };
 
+    async getAllStates(req, res) {
+        try {
+            const states = await TourService.getAllStates();
+            return res.status(200).json(states);
+        } catch (error) {
+            return res.status(500).json({ message: 'Error fetching states', error: error.message });
+        }
+    }
+
+    async getAllPackages(req, res) {
+        try {
+            const packages = await TourService.getAllPackages();
+            return res.status(200).json(packages);
+        } catch (error) {
+            return res.status(500).json({ message: 'Error fetching packages', error: error.message });
+        }
+    }
+
+    async createTourPackageWithMedia(req, res) {
+        try {
+            const tourPackageData = req.body; 
+            const mediaFiles = req.files; 
+            const result = await TourService.createTourPackageWithMedia(tourPackageData, mediaFiles);
+            return res.status(201).json({ message: "Tour package created successfully", data: result });
+        } catch (error) {
+            console.error("Error in TourPackageController.createTourPackageWithMedia:", error.message);
+            return res.status(500).json({ error: "Failed to create tour package" });
+        }
+    }
+
+    async getToursByCategoryAndState(req, res) {
+        try {
+            const { package_category, package_state } = req.query;
+
+           
+            if (!package_category || !package_state) {
+                return res.status(400).json({ error: "package_category and package_state are required" });
+            }
+
+            const tours = await TourService.getToursByCategoryAndState(
+                parseInt(package_category, 10),
+                parseInt(package_state, 10) 
+            );
+
+            return res.status(200).json({ message: "Tours fetched successfully", data: tours });
+        } catch (error) {
+            console.error("Error in TourController.getToursByCategoryAndState:", error.message);
+            return res.status(500).json({ error: "Failed to fetch tours" });
+        }
+    }
+
 }
+
+
 
 module.exports = new TourController();

@@ -22,7 +22,10 @@ db.Category = require("./category")(sequelize, Sequelize.DataTypes);
 db.ConsumerOTP = require("./consumerOTP")(sequelize, Sequelize.DataTypes);
 db.GuideOTP = require("./guideOTP")(sequelize, Sequelize.DataTypes);
 db.City = require("./city")(sequelize, Sequelize.DataTypes);
-
+db.States = require("./states")(sequelize, Sequelize.DataTypes);
+db.Package = require("./packages")(sequelize, Sequelize.DataTypes);
+db.TourPackage = require("./tourPackage")(sequelize, Sequelize.DataTypes);
+db.PackageMedia = require("./packageMedia")(sequelize, Sequelize.DataTypes);
 
 db.User.hasMany(db.Tour, {
     foreignKey: "user_id",
@@ -33,7 +36,6 @@ db.Tour.belongsTo(db.User, {
     as: "user",
 });
 
-// Tour and Media relationship
 db.Tour.hasMany(db.Media, {
     foreignKey: "tour_id",
     as: "media",
@@ -43,7 +45,6 @@ db.Media.belongsTo(db.Tour, {
     as: "tour",
 });
 
-// Category and Tour relationship
 db.Category.hasMany(db.Tour, {
     foreignKey: "category_id",
     as: "tours",
@@ -62,10 +63,43 @@ db.Tour.belongsTo(db.City, {
     as: "city",
 });
 
-// No relationships for ConsumerOTP and GuideOTP
-// These tables are independent and will be managed separately.
+// TourPackage and Category relationship
+db.Category.hasMany(db.TourPackage, {
+    foreignKey: "package_category",
+    as: "tourPackages",
+});
+db.TourPackage.belongsTo(db.Category, {
+    foreignKey: "package_category",
+    as: "category",
+});
 
-// Sequelize and Sequelize instance
+db.States.hasMany(db.TourPackage, {
+    foreignKey: "package_state",
+    as: "tourPackages",
+});
+db.TourPackage.belongsTo(db.States, {
+    foreignKey: "package_state",
+    as: "state",
+});
+
+db.Package.hasMany(db.TourPackage, {
+    foreignKey: "package_category",
+    as: "tourPackages",
+});
+db.TourPackage.belongsTo(db.Package, {
+    foreignKey: "package_category",
+    as: "package",
+});
+
+db.TourPackage.hasMany(db.PackageMedia, {
+    foreignKey: "package_id",
+    as: "media",
+});
+db.PackageMedia.belongsTo(db.TourPackage, {
+    foreignKey: "package_id",
+    as: "tourPackage",
+});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

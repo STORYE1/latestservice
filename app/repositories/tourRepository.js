@@ -1,4 +1,4 @@
-const { Tour, Media, City, Category } = require("../models");
+const { Tour, Media, City, Category, States, Packages, TourPackage, PackageMedia } = require("../models");
 
 class TourRepository {
     /**
@@ -160,7 +160,7 @@ class TourRepository {
                     'leader_name',
                     'ticket_price',
                     'cover_photo',
-                    'languages'	
+                    'languages'
                 ],
                 where: {
                     category_id: categoryId,
@@ -219,6 +219,71 @@ class TourRepository {
         }
     };
 
+    async getAllStates() {
+        try {
+            const states = await States.findAll({
+                attributes: ['state_id', 'state_name'],
+
+            });
+            return states;
+        } catch (error) {
+            console.error('Error fetching states from the database:', error);
+            throw new Error('Failed to fetch states: ' + error.message);
+        }
+    }
+
+    async getAllPackages() {
+        try {
+            const packages = await Packages.findAll({
+                attributes: ['package_id', 'package_name'],
+
+            });
+            return packages;
+        } catch (error) {
+            console.error('Error fetching packages from the database:', error);
+            throw new Error('Failed to fetch packages: ' + error.message);
+        }
+    }
+
+    async createPackageMedia(mediaData) {
+        try {
+            const result = await PackageMedia.create(mediaData);
+            return result;
+        } catch (error) {
+            console.error("Error in PackageMediaRepository.createPackageMedia:", error.message);
+            throw new Error("Failed to save package media");
+        }
+    }
+
+    async createTourPackage(tourPackageData) {
+        try {
+            const result = await TourPackage.create(tourPackageData);
+            return result;
+        } catch (error) {
+            console.error("Error in TourPackageRepository.createTourPackage:", error.message);
+            throw new Error("Failed to save tour package");
+        }
+    }
+
+    async saveMedia(mediaData) {
+        try {
+            const result = await PackageMedia.create(mediaData);
+            return result;
+        } catch (error) {
+            console.error("Error in TourPackageRepository.saveMedia:", error.message);
+            throw new Error("Failed to save media");
+        }
+    }
+
+    async createPackageMedia(mediaData) {
+        try {
+            const result = await PackageMedia.create(mediaData);
+            return result;
+        } catch (error) {
+            console.error("Error in PackageMediaRepository.createPackageMedia:", error.message);
+            throw new Error("Failed to save package media");
+        }
+    }
 }
 
 module.exports = new TourRepository();

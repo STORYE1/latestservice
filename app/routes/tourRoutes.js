@@ -1,14 +1,14 @@
 const express = require('express');
-const { uploadMiddleware, handleUploadErrors } = require('../middleware/uploadMiddleware');
+const { tourUploadMiddleware, tourPackageUploadMiddleware, handleUploadErrors } = require('../middleware/uploadMiddleware');
 const AuthenticationMiddleware = require('../middleware/authenticationMiddleware');
 const TourController = require("../controllers/tourController")
 
 const router = express.Router();
 
 router.post(
-    '/create',
+    "/create",
     AuthenticationMiddleware.authenticate,
-    uploadMiddleware,
+    tourUploadMiddleware,
     handleUploadErrors,
     TourController.createTourWithMedia
 );
@@ -16,8 +16,7 @@ router.post(
 router.put(
     '/update/:tourId',
     AuthenticationMiddleware.authenticate,
-
-    uploadMiddleware,
+    tourUploadMiddleware,
     handleUploadErrors,
     TourController.updateTourWithMedia
 );
@@ -54,6 +53,22 @@ router.get('/tours/:tourId', TourController.getTourById);
 router.get('/cities', TourController.getAllCities);
 
 router.get('/categories', TourController.getAllCategories);
+
+router.get("/states", TourController.getAllStates);
+
+router.get("/packages", TourController.getAllPackages);
+
+router.post(
+    "/tourpackage",
+    tourPackageUploadMiddleware,
+    handleUploadErrors,
+    TourController.createTourPackageWithMedia
+);
+
+router.get(
+    "/packagetours/filter",
+    TourController.getToursByCategoryAndState
+);
 
 
 module.exports = router;
