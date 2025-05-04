@@ -1,4 +1,4 @@
-const { Tour, Media, City, Category, States, Packages, TourPackage, PackageMedia } = require("../models");
+const { Tour, Media, City, Category, States, TourPackage, PackageMedia, Package } = require("../models");
 
 class TourRepository {
     /**
@@ -234,7 +234,7 @@ class TourRepository {
 
     async getAllPackages() {
         try {
-            const packages = await Packages.findAll({
+            const packages = await Package.findAll({
                 attributes: ['package_id', 'package_name'],
 
             });
