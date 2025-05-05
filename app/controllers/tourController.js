@@ -433,6 +433,56 @@ class TourController {
         }
     }
 
+    async getUserTourPackageTitles(req, res) {
+        try {
+            const user_id = req.user.userId; 
+
+            const tourPackages = await TourService.getUserTourPackageTitles(user_id);
+
+            return res.status(200).json({
+                message: "Tour package titles fetched successfully",
+                data: tourPackages,
+            });
+        } catch (error) {
+            console.error("Error in TourController.getUserTourPackageTitles:", error.message);
+            return res.status(500).json({ error: "Failed to fetch tour package titles" });
+        }
+    }
+
+    async updateTourPackageWithMedia(req, res) {
+        try {
+            const user_id = req.user.userId; 
+            const packageId = req.params.packageId;
+            const tourPackageData = { ...req.body, user_id }; 
+            const mediaFiles = req.files; 
+
+            const result = await TourService.updateTourPackageWithMedia(packageId, tourPackageData, mediaFiles);
+
+            return res.status(200).json({ message: "Tour package updated successfully", data: result });
+        } catch (error) {
+            console.error("Error in TourController.updateTourPackageWithMedia:", error.message);
+            return res.status(500).json({ error: "Failed to update tour package" });
+        }
+    }
+
+    async deleteTourPackage(req, res) {
+        try {
+            const user_id = req.user.userId; 
+            const packageId = req.params.packageId; 
+
+            const result = await TourService.deleteTourPackage(packageId, user_id);
+
+            if (result) {
+                return res.status(200).json({ message: "Tour package deleted successfully" });
+            } else {
+                return res.status(404).json({ error: "Tour package not found or unauthorized" });
+            }
+        } catch (error) {
+            console.error("Error in TourController.deleteTourPackage:", error.message);
+            return res.status(500).json({ error: "Failed to delete tour package" });
+        }
+    }
+
 }
 
 

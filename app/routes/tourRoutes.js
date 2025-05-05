@@ -71,5 +71,24 @@ router.get(
     TourController.getToursByCategoryAndState
 );
 
+router.get(
+    '/user/tourPackageTitles',
+    AuthenticationMiddleware.authenticate,
+    TourController.getUserTourPackageTitles
+);
+
+router.put(
+    '/updateTourPackage/:packageId',
+    AuthenticationMiddleware.authenticate,
+    tourPackageUploadMiddleware,
+    handleUploadErrors,
+    TourController.updateTourPackageWithMedia
+);
+
+router.delete(
+    '/deleteTourPackage/:packageId',
+    AuthenticationMiddleware.authenticate,
+    TourController.deleteTourPackage
+);
 
 module.exports = router;

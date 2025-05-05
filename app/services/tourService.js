@@ -300,6 +300,94 @@ class TourService {
         }
     }
 
+    async getUserTourPackageTitles(user_id) {
+        try {
+            const tourPackages = await TourPackage.findAll({
+                where: { user_id },
+                attributes: ["package_id", "package_title"], 
+            });
+
+            return tourPackages;
+        } catch (error) {
+            console.error("Error in TourService.getUserTourPackageTitles:", error.message);
+            throw new Error("Failed to fetch tour package titles");
+        }
+    }
+
+  
+     async updateTourPackageWithMedia(packageId, tourPackageData, files) {
+        try {
+            
+            const tourPackage = await TourPackage.findOne({ where: { package_id: packageId, user_id: tourPackageData.user_id } });
+
+            if (!tourPackage) {
+                throw new Error("Tour package not found or unauthorized");
+            }
+
+           
+            if (files.service_provider_pic && files.service_provider_pic.length > 0) {
+                const serviceProviderPicUrl = files.service_provider_pic[0].location;
+                tourPackageData.service_provider_pic = serviceProviderPicUrl;
+            }
+
+            
+            if (files.package_cover_photo && files.package_cover_photo.length > 0) {
+                const packageCoverPhotoUrl = files.package_cover_photo[0].location;
+                tourPackageData.package_cover_photo = packageCoverPhotoUrl;
+            }
+
+           
+            await tourPackage.update(tourPackageData);
+
+          
+            if (files.mediaFiles && files.mediaFiles.length > 0) {
+               
+                await PackageMedia.destroy({ where: { package_id: packageId } });
+
+               
+                const mediaPromises = files.mediaFiles.map(async (file) => {
+                    const mediaUrl = file.location;
+                    const type = file.mimetype.startsWith("image/")
+                        ? "image"
+                        : file.mimetype.startsWith("video/")
+                            ? "video"
+                            : "other";
+
+                    const mediaData = {
+                        package_id: packageId,
+                        type: type,
+                        media_url: mediaUrl,
+                    };
+
+                    await PackageMedia.create(mediaData);
+                });
+
+                await Promise.all(mediaPromises);
+            }
+
+            return tourPackage;
+        } catch (error) {
+            console.error("Error in TourService.updateTourPackageWithMedia:", error.message);
+            throw new Error("Failed to update tour package");
+        }
+    }
+
+    async deleteTourPackage(packageId, user_id) {
+        try {
+            const tourPackage = await TourPackage.findOne({ where: { package_id: packageId, user_id } });
+
+            if (!tourPackage) {
+                return false; 
+            }
+
+            await tourPackage.destroy();
+            return true;
+        } catch (error) {
+            console.error("Error in TourService.deleteTourPackage:", error.message);
+            throw new Error("Failed to delete tour package");
+        }
+    }
+
 }
 
 module.exports = new TourService();
