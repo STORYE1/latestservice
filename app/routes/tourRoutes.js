@@ -91,4 +91,9 @@ router.delete(
     TourController.deleteTourPackage
 );
 
+router.get(
+    '/tourpackages/category/:categoryId/:cityId',
+    TourController.getTourPackagesByCategoryAndCity
+);
+
 module.exports = router;

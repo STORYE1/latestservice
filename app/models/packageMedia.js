@@ -36,5 +36,12 @@ module.exports = (sequelize) => {
         }
     );
 
+    PackageMedia.associate = (models) => {
+        PackageMedia.belongsTo(models.TourPackage, {
+            foreignKey: "package_id",
+            as: "tourPackage",
+        });
+    };
+
     return PackageMedia;
 };

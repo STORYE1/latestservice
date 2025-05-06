@@ -103,5 +103,12 @@ module.exports = (sequelize) => {
         }
     );
 
+    TourPackage.associate = (models) => {
+        TourPackage.hasMany(models.PackageMedia, {
+            foreignKey: "package_id",
+            as: "media",
+        });
+    };
+
     return TourPackage;
 };

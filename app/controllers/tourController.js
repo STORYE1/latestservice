@@ -483,6 +483,22 @@ class TourController {
         }
     }
 
+    async getTourPackagesByCategoryAndCity(req, res) {
+        try {
+            const { categoryId, cityId } = req.params;
+
+            const tourPackages = await TourService.getTourPackagesByCategoryAndCity(categoryId, cityId);
+
+            return res.status(200).json({
+                message: "Tour packages fetched successfully",
+                data: tourPackages,
+            });
+        } catch (error) {
+            console.error("Error in TourController.getTourPackagesByCategoryAndCity:", error.message);
+            return res.status(500).json({ error: "Failed to fetch tour packages" });
+        }
+    }
+
 }
 
 
