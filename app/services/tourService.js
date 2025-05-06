@@ -393,13 +393,21 @@ class TourService {
             const tourPackages = await TourPackage.findAll({
                 where: {
                     package_category: categoryId,
-                    package_state: cityId, // Assuming `city_id` exists in the `tourpackages` table
+                    package_state: cityId,
                 },
+                attributes: [
+                    "package_id",
+                    "package_name",
+                    "service_provider_name",
+                    "package_price",
+                    "package_cover_photo",
+                    "languages",
+                ], 
                 include: [
                     {
                         model: PackageMedia,
-                        as: "media", // Alias defined in the association
-                        attributes: ["media_id", "type", "media_url"], // Fetch only required fields
+                        as: "media",
+                        attributes: ["media_id", "type", "media_url"], 
                     },
                 ],
             });
