@@ -402,14 +402,8 @@ class TourService {
                     "package_price",
                     "package_cover_photo",
                     "languages",
-                ], 
-                include: [
-                    {
-                        model: PackageMedia,
-                        as: "media",
-                        attributes: ["media_id", "type", "media_url"], 
-                    },
                 ],
+
             });
 
             return tourPackages;
