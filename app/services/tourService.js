@@ -413,6 +413,44 @@ class TourService {
         }
     }
 
+    async getTourPackageById(packageId) {
+        try {
+            const tourPackage = await TourPackage.findOne({
+                where: { package_id: packageId },
+                attributes: [
+                    "package_id",
+                    "package_name",
+                    "service_provider_name",
+                    "package_price",
+                    "package_cover_photo",
+                    "languages",
+                    "package_description",
+                    "pickup",
+                    "drop",
+                    "package_duration",
+                    "package_category",
+                    "service_provider_email",
+                    "service_provider_phone",
+                    "package_includes",
+                    "package_excludes",
+                    "service_provider_pic",
+                    "service_provider_description"
+                ],
+                include: [
+                    {
+                        model: PackageMedia,
+                        as: "media",
+                        attributes: ["media_id", "type", "media_url"],
+                    },
+                ],
+            });
+            return tourPackage;
+        } catch (error) {
+            console.error("Error in TourService.getTourPackageById:", error.message);
+            throw new Error("Failed to fetch tour package");
+        }
+    }
+
 }
 
 module.exports = new TourService();

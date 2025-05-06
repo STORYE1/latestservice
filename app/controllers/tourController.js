@@ -499,6 +499,26 @@ class TourController {
         }
     }
 
+    async getTourPackageById(req, res) {
+        try {
+            const { packageId } = req.params; 
+
+            const tourPackage = await TourService.getTourPackageById(packageId);
+
+            if (!tourPackage) {
+                return res.status(404).json({ error: "Tour package not found" });
+            }
+
+            return res.status(200).json({
+                message: "Tour package fetched successfully",
+                data: tourPackage,
+            });
+        } catch (error) {
+            console.error("Error in TourController.getTourPackageById:", error.message);
+            return res.status(500).json({ error: "Failed to fetch tour package" });
+        }
+    }
+
 }
 
 

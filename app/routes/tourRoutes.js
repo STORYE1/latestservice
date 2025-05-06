@@ -96,4 +96,6 @@ router.get(
     TourController.getTourPackagesByCategoryAndCity
 );
 
+router.get('/tourpackages/:packageId', TourController.getTourPackageById);
+
 module.exports = router;
