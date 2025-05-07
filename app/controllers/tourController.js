@@ -403,7 +403,7 @@ class TourController {
                 package_name,
                 package_title,
                 package_description,
-                languages,
+                languages, // This will now be an array
                 package_price,
                 service_provider_name,
                 service_provider_description,
@@ -421,17 +421,8 @@ class TourController {
             const user_id = req.user.userId; // Extract user_id from the token
 
             // Safely parse JSON fields
-            let parsedLanguages = [];
             let parsedIncludes = [];
             let parsedExcludes = [];
-
-            // Handle `languages` as a comma-separated string
-            try {
-                parsedLanguages = languages ? languages.split(',').map(lang => lang.trim()) : [];
-            } catch (error) {
-                console.error("Invalid format in languages:", error.message);
-                return failureResponse(res, 400, "Invalid format in languages");
-            }
 
             // Parse `package_includes` and `package_excludes` as JSON
             try {
@@ -454,7 +445,7 @@ class TourController {
                 package_name,
                 package_title,
                 package_description,
-                languages: parsedLanguages.join(', '), // Convert back to a comma-separated string for storage
+                languages: Array.isArray(languages) ? languages : [languages], // Ensure `languages` is an array
                 package_price,
                 service_provider_name,
                 service_provider_description,
