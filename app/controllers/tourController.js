@@ -399,16 +399,80 @@ class TourController {
 
     async createTourPackageWithMedia(req, res) {
         try {
-            const user_id = req.user.userId; 
-            const tourPackageData = { ...req.body, user_id }; 
-            const mediaFiles = req.files;
+            const {
+                package_name,
+                package_title,
+                package_description,
+                languages,
+                package_price,
+                service_provider_name,
+                service_provider_description,
+                package_duration,
+                package_category,
+                service_provider_email,
+                service_provider_phone,
+                package_includes,
+                package_excludes,
+                pickup,
+                drop,
+                package_state,
+            } = req.body;
 
-            const result = await TourService.createTourPackageWithMedia(tourPackageData, mediaFiles);
+            const user_id = req.user.userId; // Extract user_id from the token
 
-            return res.status(201).json({ message: "Tour package created successfully", data: result });
+            // Parse languages, package_includes, and package_excludes if they are JSON strings
+            const parsedData = {
+                user_id,
+                package_name,
+                package_title,
+                package_description,
+                languages: languages ? JSON.parse(languages) : [],
+                package_price,
+                service_provider_name,
+                service_provider_description,
+                package_duration: package_duration ? package_duration.trim() : null,
+                package_category,
+                service_provider_email,
+                service_provider_phone,
+                package_includes: package_includes ? JSON.parse(package_includes) : [],
+                package_excludes: package_excludes ? JSON.parse(package_excludes) : [],
+                pickup,
+                drop,
+                package_state,
+            };
+
+            // Extract uploaded files
+            const serviceProviderPicFile = req.files?.service_provider_pic?.[0];
+            const serviceProviderPicURL = serviceProviderPicFile?.location;
+
+            const packageCoverPhotoFile = req.files?.package_cover_photo?.[0];
+            const packageCoverPhotoURL = packageCoverPhotoFile?.location;
+
+            const mediaFiles = req.files?.mediaFiles?.map(file => file.location) || [];
+
+            // Validate required files
+            if (!serviceProviderPicURL) {
+                throw new Error('Service provider picture is required.');
+            }
+
+            if (!packageCoverPhotoURL) {
+                throw new Error('Package cover photo is required.');
+            }
+
+            // Add file URLs to parsed data
+            parsedData.service_provider_pic = serviceProviderPicURL;
+            parsedData.package_cover_photo = packageCoverPhotoURL;
+
+            // Call the service layer to create the tour package
+            const result = await TourService.createTourPackageWithMedia(parsedData, mediaFiles);
+
+            return successResponse(res, 201, {
+                message: 'Tour package created successfully',
+                data: result,
+            });
         } catch (error) {
-            console.error("Error in TourPackageController.createTourPackageWithMedia:", error.message);
-            return res.status(500).json({ error: "Failed to create tour package" });
+            console.error('Error creating tour package:', error);
+            return failureResponse(res, 500, 'Failed to create tour package', error.message);
         }
     }
 
@@ -435,7 +499,7 @@ class TourController {
 
     async getUserTourPackageTitles(req, res) {
         try {
-            const user_id = req.user.userId; 
+            const user_id = req.user.userId;
 
             const tourPackages = await TourService.getUserTourPackageTitles(user_id);
 
@@ -451,10 +515,10 @@ class TourController {
 
     async updateTourPackageWithMedia(req, res) {
         try {
-            const user_id = req.user.userId; 
+            const user_id = req.user.userId;
             const packageId = req.params.packageId;
-            const tourPackageData = { ...req.body, user_id }; 
-            const mediaFiles = req.files; 
+            const tourPackageData = { ...req.body, user_id };
+            const mediaFiles = req.files;
 
             const result = await TourService.updateTourPackageWithMedia(packageId, tourPackageData, mediaFiles);
 
@@ -467,8 +531,8 @@ class TourController {
 
     async deleteTourPackage(req, res) {
         try {
-            const user_id = req.user.userId; 
-            const packageId = req.params.packageId; 
+            const user_id = req.user.userId;
+            const packageId = req.params.packageId;
 
             const result = await TourService.deleteTourPackage(packageId, user_id);
 
@@ -501,7 +565,7 @@ class TourController {
 
     async getTourPackageById(req, res) {
         try {
-            const { packageId } = req.params; 
+            const { packageId } = req.params;
 
             const tourPackage = await TourService.getTourPackageById(packageId);
 
