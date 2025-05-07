@@ -425,13 +425,15 @@ class TourController {
             let parsedIncludes = [];
             let parsedExcludes = [];
 
+            // Handle `languages` as a comma-separated string
             try {
-                parsedLanguages = languages ? JSON.parse(languages) : [];
+                parsedLanguages = languages ? languages.split(',').map(lang => lang.trim()) : [];
             } catch (error) {
-                console.error("Invalid JSON format in languages:", error.message);
-                return failureResponse(res, 400, "Invalid JSON format in languages");
+                console.error("Invalid format in languages:", error.message);
+                return failureResponse(res, 400, "Invalid format in languages");
             }
 
+            // Parse `package_includes` and `package_excludes` as JSON
             try {
                 parsedIncludes = package_includes ? JSON.parse(package_includes) : [];
             } catch (error) {
@@ -452,7 +454,7 @@ class TourController {
                 package_name,
                 package_title,
                 package_description,
-                languages: parsedLanguages,
+                languages: parsedLanguages.join(', '), // Convert back to a comma-separated string for storage
                 package_price,
                 service_provider_name,
                 service_provider_description,
