@@ -420,13 +420,39 @@ class TourController {
 
             const user_id = req.user.userId; // Extract user_id from the token
 
-            // Parse languages, package_includes, and package_excludes if they are JSON strings
+            // Safely parse JSON fields
+            let parsedLanguages = [];
+            let parsedIncludes = [];
+            let parsedExcludes = [];
+
+            try {
+                parsedLanguages = languages ? JSON.parse(languages) : [];
+            } catch (error) {
+                console.error("Invalid JSON format in languages:", error.message);
+                return failureResponse(res, 400, "Invalid JSON format in languages");
+            }
+
+            try {
+                parsedIncludes = package_includes ? JSON.parse(package_includes) : [];
+            } catch (error) {
+                console.error("Invalid JSON format in package_includes:", error.message);
+                return failureResponse(res, 400, "Invalid JSON format in package_includes");
+            }
+
+            try {
+                parsedExcludes = package_excludes ? JSON.parse(package_excludes) : [];
+            } catch (error) {
+                console.error("Invalid JSON format in package_excludes:", error.message);
+                return failureResponse(res, 400, "Invalid JSON format in package_excludes");
+            }
+
+            // Construct parsed data
             const parsedData = {
                 user_id,
                 package_name,
                 package_title,
                 package_description,
-                languages: languages ? JSON.parse(languages) : [],
+                languages: parsedLanguages,
                 package_price,
                 service_provider_name,
                 service_provider_description,
@@ -434,8 +460,8 @@ class TourController {
                 package_category,
                 service_provider_email,
                 service_provider_phone,
-                package_includes: package_includes ? JSON.parse(package_includes) : [],
-                package_excludes: package_excludes ? JSON.parse(package_excludes) : [],
+                package_includes: parsedIncludes,
+                package_excludes: parsedExcludes,
                 pickup,
                 drop,
                 package_state,
@@ -452,11 +478,11 @@ class TourController {
 
             // Validate required files
             if (!serviceProviderPicURL) {
-                throw new Error('Service provider picture is required.');
+                throw new Error("Service provider picture is required.");
             }
 
             if (!packageCoverPhotoURL) {
-                throw new Error('Package cover photo is required.');
+                throw new Error("Package cover photo is required.");
             }
 
             // Add file URLs to parsed data
@@ -467,12 +493,12 @@ class TourController {
             const result = await TourService.createTourPackageWithMedia(parsedData, mediaFiles);
 
             return successResponse(res, 201, {
-                message: 'Tour package created successfully',
+                message: "Tour package created successfully",
                 data: result,
             });
         } catch (error) {
-            console.error('Error creating tour package:', error);
-            return failureResponse(res, 500, 'Failed to create tour package', error.message);
+            console.error("Error creating tour package:", error);
+            return failureResponse(res, 500, "Failed to create tour package", error.message);
         }
     }
 
