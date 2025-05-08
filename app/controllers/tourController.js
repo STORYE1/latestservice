@@ -399,11 +399,15 @@ class TourController {
 
     async createTourPackageWithMedia(req, res) {
         try {
+            // Log the incoming data
+            console.log("Request Body:", req.body);
+            console.log("Request Files:", req.files);
+
             const {
                 package_name,
                 package_title,
                 package_description,
-                languages, 
+                languages,
                 package_price,
                 service_provider_name,
                 service_provider_description,

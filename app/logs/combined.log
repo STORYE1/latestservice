@@ -2382,3 +2382,31 @@
 2025-05-06T13:56:23.294Z info: Database connection has been established successfully.
 2025-05-06T14:17:20.198Z info: Server is running on port 8086
 2025-05-06T14:17:23.753Z info: Database connection has been established successfully.
+2025-05-08T02:08:08.940Z info: Server is running on port 8086
+2025-05-08T02:08:12.074Z info: Database connection has been established successfully.
+2025-05-08T02:08:51.967Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-08T02:08:51.972Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}
+2025-05-08T02:11:20.245Z info: Server is running on port 8086
+2025-05-08T02:11:23.305Z info: Database connection has been established successfully.
+2025-05-08T02:11:26.863Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-08T02:11:26.872Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}
+2025-05-08T02:18:20.709Z info: Server is running on port 8086
+2025-05-08T02:18:23.821Z info: Database connection has been established successfully.
+2025-05-08T02:18:32.212Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-08T02:18:32.215Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}
+2025-05-08T02:19:38.107Z info: Server is running on port 8086
+2025-05-08T02:19:41.478Z info: Database connection has been established successfully.
+2025-05-08T02:19:49.682Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-08T02:19:49.685Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}
+2025-05-08T02:24:24.497Z info: Server is running on port 8086
+2025-05-08T02:24:27.809Z info: Database connection has been established successfully.
+2025-05-08T02:24:44.643Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-08T02:24:44.647Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}
+2025-05-08T02:43:07.727Z info: Server is running on port 8086
+2025-05-08T02:43:11.905Z info: Database connection has been established successfully.
+2025-05-08T02:43:19.485Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-08T02:43:19.489Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}
+2025-05-08T02:50:54.825Z info: Server is running on port 8086
+2025-05-08T02:50:58.166Z info: Database connection has been established successfully.
+2025-05-08T02:51:27.606Z info: Extracted token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI5LCJlbWFpbCI6Im1pdGhsZXNoZ3VwdGEyNDFAZ21haWwuY29tIiwiaWF0IjoxNzQ2MzgxODM1LCJleHAiOjE3NDY5ODY2MzV9.CQO1bLny6WuRoum0iH7OeSQNUuZCCgFB2-hZ4Lf7GvA
+2025-05-08T02:51:27.611Z info: Decoded token: {"userId":29,"email":"mithleshgupta241@gmail.com","iat":1746381835,"exp":1746986635}

@@ -244,38 +244,61 @@ class TourService {
 
     async createTourPackageWithMedia(tourPackageData, files) {
         try {
-            if (files.service_provider_pic && files.service_provider_pic.length > 0) {
-                const serviceProviderPicUrl = files.service_provider_pic[0].location;
-                tourPackageData.service_provider_pic = serviceProviderPicUrl;
+            console.log("Tour Package Data:", tourPackageData);
+            console.log("Files:", files);
+
+            // Extract and set service provider picture URL
+            const serviceProviderPic = files.find(f => f.fieldname === 'service_provider_pic');
+            if (serviceProviderPic) {
+                tourPackageData.service_provider_pic = serviceProviderPic.location;
+                console.log("Service Provider Pic URL:", serviceProviderPic.location);
             }
 
-            if (files.package_cover_photo && files.package_cover_photo.length > 0) {
-                const packageCoverPhotoUrl = files.package_cover_photo[0].location;
-                tourPackageData.package_cover_photo = packageCoverPhotoUrl;
+            // Extract and set package cover photo URL
+            const packageCoverPhoto = files.find(f => f.fieldname === 'package_cover_photo');
+            if (packageCoverPhoto) {
+                tourPackageData.package_cover_photo = packageCoverPhoto.location;
+                console.log("Package Cover Photo URL:", packageCoverPhoto.location);
             }
 
+            // Create the tour package
+            console.log("Creating Tour Package with Data:", tourPackageData);
             const tourPackage = await TourRepository.createTourPackage(tourPackageData);
+            console.log("Tour Package Created:", tourPackage);
 
-            if (files.mediaFiles && files.mediaFiles.length > 0) {
-                const mediaPromises = files.mediaFiles.map(async (file) => {
-                    const mediaUrl = file.location;
-                    const type = file.mimetype.startsWith("image/")
-                        ? "image"
-                        : file.mimetype.startsWith("video/")
-                            ? "video"
-                            : "other";
+            // Process media files
+            let mediaDataArray = [];
 
-                    const mediaData = {
+            if (files.length > 0 && typeof files[0] === 'string') {
+                // Case: Already uploaded media URLs (string array)
+                mediaDataArray = files.map(url => ({
+                    package_id: tourPackage.package_id,
+                    type: url.endsWith('.mp4') || url.endsWith('.webm') ? 'video' : 'image',
+                    media_url: url
+                }));
+
+                console.log("Media Data Array to Save (from URL):", mediaDataArray);
+                await packageMediaRepository.addMedia(mediaDataArray);
+                console.log("All Media URLs Saved Successfully");
+            } else {
+                // Case: Uploaded media from multer middleware
+                const mediaFiles = files.filter(f => f.fieldname === 'mediaFiles');
+
+                if (mediaFiles.length > 0) {
+                    mediaDataArray = mediaFiles.map(file => ({
                         package_id: tourPackage.package_id,
-                        type: type,
-                        media_url: mediaUrl,
-                    };
+                        type: file.mimetype.startsWith('video') ? 'video' : 'image',
+                        media_url: file.location, // 'location' is added by multer-s3
+                    }));
 
-                    await packageMediaRepository.addMedia(mediaData);
-                });
-
-                await Promise.all(mediaPromises);
+                    console.log("Media Data Array to Save (from upload):", mediaDataArray);
+                    await packageMediaRepository.addMedia(mediaDataArray);
+                    console.log("All Uploaded Media Files Saved Successfully");
+                } else {
+                    console.log("No mediaFiles found in the uploaded files.");
+                }
             }
+
 
             return tourPackage;
         } catch (error) {
@@ -283,6 +306,7 @@ class TourService {
             throw new Error("Failed to create tour package");
         }
     }
+
 
     async getToursByCategoryAndState(package_category, package_state) {
         try {
