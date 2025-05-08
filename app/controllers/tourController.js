@@ -566,19 +566,15 @@ class TourController {
 
     async deleteTourPackage(req, res) {
         try {
-            const user_id = req.user.userId;
-            const packageId = req.params.packageId;
+            const { packageId } = req.params;
+            const user_id = req.user.userId; // Extract user ID from the authenticated user
 
             const result = await TourService.deleteTourPackage(packageId, user_id);
 
-            if (result) {
-                return res.status(200).json({ message: "Tour package deleted successfully" });
-            } else {
-                return res.status(404).json({ error: "Tour package not found or unauthorized" });
-            }
+            return res.status(200).json(result);
         } catch (error) {
-            console.error("Error in TourController.deleteTourPackage:", error.message);
-            return res.status(500).json({ error: "Failed to delete tour package" });
+            console.error('Error in TourController.deleteTourPackage:', error.message);
+            return res.status(500).json({ message: 'Failed to delete tour package', error: error.message });
         }
     }
 

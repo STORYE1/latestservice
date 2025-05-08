@@ -398,20 +398,28 @@ class TourService {
 
     async deleteTourPackage(packageId, user_id) {
         try {
-            const tourPackage = await TourPackage.findOne({ where: { package_id: packageId, user_id } });
+            // Fetch the tour package along with its associated media
+            const tourPackage = await TourPackage.findOne({
+                where: { package_id: packageId, user_id },
+                include: [{ model: PackageMedia, as: 'media' }],
+            });
 
             if (!tourPackage) {
-                return false;
+                throw new Error('Tour package not found or unauthorized');
             }
 
+            // Delete associated media
+            await PackageMedia.destroy({ where: { package_id: packageId } });
+
+            // Delete the tour package
             await tourPackage.destroy();
-            return true;
+
+            return { message: 'Tour package and associated media deleted successfully' };
         } catch (error) {
-            console.error("Error in TourService.deleteTourPackage:", error.message);
-            throw new Error("Failed to delete tour package");
+            console.error('Error deleting tour package:', error.message);
+            throw new Error('Failed to delete tour package: ' + error.message);
         }
     }
-
     async getTourPackagesByCategoryAndCity(categoryId, cityId) {
         try {
             const tourPackages = await TourPackage.findAll({
