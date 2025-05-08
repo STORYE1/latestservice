@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
                 allowNull: true,
             },
             languages: {
-                type: DataTypes.ARRAY(DataTypes.STRING),
+                type: DataTypes.JSONB, // Change from ARRAY(DataTypes.STRING) to JSONB
                 allowNull: true,
             },
             package_price: {

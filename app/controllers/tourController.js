@@ -403,7 +403,7 @@ class TourController {
                 package_name,
                 package_title,
                 package_description,
-                languages, // This will now be an array
+                languages, 
                 package_price,
                 service_provider_name,
                 service_provider_description,
@@ -421,8 +421,20 @@ class TourController {
             const user_id = req.user.userId; // Extract user_id from the token
 
             // Safely parse JSON fields
+            let parsedLanguages = [];
             let parsedIncludes = [];
             let parsedExcludes = [];
+
+            // Validate and process `languages` as an array of objects
+            try {
+                parsedLanguages = Array.isArray(languages) ? languages : JSON.parse(languages);
+                if (!Array.isArray(parsedLanguages)) {
+                    throw new Error("Invalid format for languages. Expected an array of objects.");
+                }
+            } catch (error) {
+                console.error("Invalid JSON format in languages:", error.message);
+                return failureResponse(res, 400, "Invalid JSON format in languages");
+            }
 
             // Parse `package_includes` and `package_excludes` as JSON
             try {
@@ -445,7 +457,7 @@ class TourController {
                 package_name,
                 package_title,
                 package_description,
-                languages: Array.isArray(languages) ? languages : [languages], // Ensure `languages` is an array
+                languages: parsedLanguages, // Save the array of objects directly
                 package_price,
                 service_provider_name,
                 service_provider_description,
