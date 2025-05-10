@@ -434,6 +434,7 @@ class TourService {
                     "package_price",
                     "package_cover_photo",
                     "languages",
+                    "package_duration"
                 ],
 
             });
