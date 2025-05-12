@@ -8,15 +8,7 @@ const routes = require("./routes");
 const app = express();
 
 
-app.use(cors({
-  origin: 'https://stroyeadminpanel.onrender.com',
-  credentials: true
-}));
-
-app.options('*', cors({
-  origin: 'https://stroyeadminpanel.onrender.com',
-  credentials: true
-}));
+app.use(cors());
 
 
 app.use(bodyParser.json());
