@@ -6,7 +6,6 @@ const cors = require("cors");
 const rateLimiter = require("./utils/rateLimiter");
 const routes = require("./routes");
 
-const cors = require("cors");
 
 app.use(cors({
   origin: 'https://stroyeadminpanel.onrender.com',
