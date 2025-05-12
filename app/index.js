@@ -6,13 +6,18 @@ const cors = require("cors");
 const rateLimiter = require("./utils/rateLimiter");
 const routes = require("./routes");
 
-const app = express();
-
+const cors = require("cors");
 
 app.use(cors({
   origin: 'https://stroyeadminpanel.onrender.com',
   credentials: true
 }));
+
+app.options('*', cors({
+  origin: 'https://stroyeadminpanel.onrender.com',
+  credentials: true
+}));
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
