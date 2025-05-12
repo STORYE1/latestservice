@@ -9,7 +9,10 @@ const routes = require("./routes");
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://stroyeadminpanel.onrender.com',
+  credentials: true
+}));
 
 app.use(bodyParser.json());
 app.use(cookieParser());
