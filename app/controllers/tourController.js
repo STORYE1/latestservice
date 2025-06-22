@@ -567,8 +567,7 @@ class TourController {
     async deleteTourPackage(req, res) {
         try {
             const { packageId } = req.params;
-            const user_id = req.user.userId; // Extract user ID from the authenticated user
-
+            const user_id = req.user.userId;
             const result = await TourService.deleteTourPackage(packageId, user_id);
 
             return res.status(200).json(result);
@@ -611,6 +610,21 @@ class TourController {
         } catch (error) {
             console.error("Error in TourController.getTourPackageById:", error.message);
             return res.status(500).json({ error: "Failed to fetch tour package" });
+        }
+    }
+
+    async trackCall(req, res) {
+        try {
+            const { tour_id, guide_id, consumer_phone } = req.body;
+            const consumer_id = req.user?.consumerId || null;
+            console.log("req.user:", req.user);
+            console.log("Tracking call with data:", { tour_id, guide_id, consumer_id, consumer_phone });
+
+            await TourService.CallTrackingService({ tour_id, guide_id, consumer_id, consumer_phone });
+            res.status(201).json({ message: 'Call tracked successfully' });
+        } catch (error) {
+            console.error('Error tracking call:', error);
+            res.status(500).json({ error: 'Failed to track call' });
         }
     }
 

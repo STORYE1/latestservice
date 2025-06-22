@@ -96,6 +96,8 @@ router.get(
     TourController.getTourPackagesByCategoryAndCity
 );
 
+router.post('/track-call', AuthenticationMiddleware.authenticate, TourController.trackCall);
+
 router.get('/tourpackages/:packageId', TourController.getTourPackageById);
 
 module.exports = router;

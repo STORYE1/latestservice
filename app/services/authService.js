@@ -31,7 +31,7 @@ class AuthService {
   }
 
   async signup(email, phone, userType, gender, dob, instagram, city) {
-    
+
     const existingUser = await this.authRepository.findUserByEmail(email, userType);
     if (existingUser) {
       throw new Error("Email is already registered.");
@@ -61,15 +61,15 @@ class AuthService {
 
     const otpRecord = await this.authRepository.findOtpByEmail(email, userType);
     if (!otpRecord) {
-        throw new Error("OTP not found. Please request a new one.");
+      throw new Error("OTP not found. Please request a new one.");
     }
 
     if (otpRecord.otp !== otp) {
-        throw new Error("Invalid OTP.");
+      throw new Error("Invalid OTP.");
     }
 
     if (Date.now() > otpRecord.otpExpirationTime) {
-        throw new Error("OTP has expired. Please request a new one.");
+      throw new Error("OTP has expired. Please request a new one.");
     }
 
     const userData = { email, phone, gender, dob, instagram, city };
@@ -77,13 +77,19 @@ class AuthService {
 
     const newUser = await this.authRepository.createUser(userData, userType);
 
-    const payload = { userId: newUser.user_id, email: newUser.email };
+    const payload = {
+      email: newUser.email,
+      userType: userType,
+      userId: userType === "guide" ? newUser.user_id : undefined,
+      consumerId: userType === "consumer" ? newUser.consumer_id : undefined,
+    };
+    console.log("Generating token for user:", payload);
     const token = JwtService.generateToken(payload);
 
     await this.authRepository.updateUser({ email, token }, userType);
 
     return { message: "Signup successful", token, user: newUser };
-}
+  }
 
   async loginRequest(email, userType) {
     const user = await this.authRepository.findUserByEmail(email, userType);
@@ -122,7 +128,13 @@ class AuthService {
       throw new Error("User not found.");
     }
 
-    const payload = { userId: user.user_id, email: user.email };
+    const payload = {
+      email: user.email,
+      userType: userType,
+      userId: userType === "guide" ? user.user_id : undefined,
+      consumerId: userType === "consumer" ? user.consumer_id : undefined,
+    };
+    console.log("Generating token for user:", payload);
     const token = JwtService.generateToken(payload);
 
     await this.authRepository.updateUser({ email, token }, userType);
@@ -173,7 +185,7 @@ class AuthService {
     if (userType === "guide") return GuideOTP;
     if (userType === "consumer") return ConsumerOTP;
     throw new Error("Invalid userType");
-}
+  }
 }
 
 module.exports = new AuthService();

@@ -1,4 +1,4 @@
-const { Tour, Media, City, Category, States, TourPackage, PackageMedia, Package } = require("../models");
+const { Tour, Media, City, Category, States, TourPackage, PackageMedia, Package, CallTracking } = require("../models");
 
 class TourRepository {
     /**
@@ -160,7 +160,8 @@ class TourRepository {
                     'leader_name',
                     'ticket_price',
                     'cover_photo',
-                    'languages'
+                    'languages',
+                    'user_id',
                 ],
                 where: {
                     category_id: categoryId,
@@ -283,6 +284,16 @@ class TourRepository {
             console.error("Error in PackageMediaRepository.createPackageMedia:", error.message);
             throw new Error("Failed to save package media");
         }
+    }
+
+    async createCallTracking(data) {
+        return CallTracking.create({
+            tour_id: data.tour_id,
+            guide_id: data.guide_id,
+            consumer_id: data.consumer_id,
+            consumer_phone: data.consumer_phone,
+            timestamp: new Date(),
+        });
     }
 }
 

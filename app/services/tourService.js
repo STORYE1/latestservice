@@ -484,6 +484,16 @@ class TourService {
         }
     }
 
+    async CallTrackingService(trackData) {
+        try {
+            const callTracking = await TourRepository.createCallTracking(trackData);
+            return callTracking;
+        } catch (error) {
+            console.error("Error in CallTrackingService.trackCall:", error.message);
+            throw new Error("Failed to track call");
+        }
+    }
+
 }
 
 module.exports = new TourService();

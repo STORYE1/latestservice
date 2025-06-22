@@ -26,6 +26,7 @@ db.States = require("./states")(sequelize, Sequelize.DataTypes);
 db.Package = require("./packages")(sequelize, Sequelize.DataTypes);
 db.TourPackage = require("./tourPackage")(sequelize, Sequelize.DataTypes);
 db.PackageMedia = require("./packageMedia")(sequelize, Sequelize.DataTypes);
+db.CallTracking = require("./callTracking")(sequelize, Sequelize.DataTypes);
 
 db.User.hasMany(db.Tour, {
     foreignKey: "user_id",
@@ -98,6 +99,21 @@ db.TourPackage.hasMany(db.PackageMedia, {
 db.PackageMedia.belongsTo(db.TourPackage, {
     foreignKey: "package_id",
     as: "tourPackage",
+});
+
+
+db.CallTracking.belongsTo(db.User, {
+    foreignKey: "guide_id",
+    as: "guide",
+});
+db.CallTracking.belongsTo(db.Consumer, {
+    foreignKey: "consumer_id",
+    as: "consumer",
+});
+
+db.CallTracking.belongsTo(db.Tour, {
+    foreignKey: "tour_id",
+    as: "tour",
 });
 
 db.sequelize = sequelize;

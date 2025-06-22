@@ -22,7 +22,11 @@ class AuthenticationMiddleware {
             const decodedToken = await this.jwtService.verifyToken(token);
             logger.info(`Decoded token: ${JSON.stringify(decodedToken)}`);
 
-            req.user = { userId: decodedToken.userId }; 
+            if (decodedToken.userType === "consumer") {
+                req.user = { consumerId: decodedToken.consumerId };
+            } else if (decodedToken.userType === "guide") {
+                req.user = { userId: decodedToken.userId };
+            }
             next();
         } catch (error) {
             logger.error(`Error verifying token: ${error.message}`);
