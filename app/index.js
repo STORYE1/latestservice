@@ -5,11 +5,11 @@ const helmet = require("helmet");
 const cors = require("cors");
 const rateLimiter = require("./utils/rateLimiter");
 const routes = require("./routes");
-
 const app = express();
 
 
 app.use(cors());
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
